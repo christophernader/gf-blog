@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, useScroll, useTransform, type Variants, type Transition } from 'framer-motion'
+import { motion, useScroll, useTransform, useSpring, type Variants, type Transition } from 'framer-motion'
 import { urlFor } from '../../sanity/lib/client'
 
 interface BlogCardProps {
@@ -72,8 +72,15 @@ export function BlogCard({
         offset: ["start end", "end start"]
     })
 
-    // Flames lag behind with a slight delay effect
-    const flameY = useTransform(scrollYProgress, [0, 1], [8, -8])
+    // Transform scroll progress to Y offset
+    const flameYRaw = useTransform(scrollYProgress, [0, 1], [15, -15])
+
+    // Add spring physics so flames lag behind with smooth catch-up
+    const flameY = useSpring(flameYRaw, {
+        stiffness: 50,
+        damping: 15,
+        mass: 0.5
+    })
 
     const formatDate = (dateString?: string) => {
         if (!dateString) return ''

@@ -626,10 +626,6 @@ a:hover {
   font-size: 1.75rem;
   font-weight: 700;
   color: var(--ink);
-  background: linear-gradient(135deg, var(--pastel-pink-dark) 0%, var(--pastel-lavender-dark) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 /* Nav links as pill buttons */
@@ -680,6 +676,8 @@ a:hover {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8'%3E%3Cpath d='M0 4 Q 12.5 0, 25 4 T 50 4 T 75 4 T 100 4' stroke='%231F2937' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x;
   background-size: 100px 8px;
   opacity: 0.3;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
 }
 
 /* ===========================
