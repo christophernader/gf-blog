@@ -481,6 +481,84 @@ a:hover {
   color: var(--pastel-pink-dark);
 }
 
+/* ===========================
+   Fire Border Effect (Newest Post)
+   =========================== */
+@keyframes fire-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 5px #ff9d5c,
+      0 0 10px #ff7b3a,
+      0 0 20px #ff5722,
+      0 0 30px rgba(255, 87, 34, 0.4),
+      inset 0 0 10px rgba(255, 157, 92, 0.1);
+  }
+  25% {
+    box-shadow:
+      0 0 8px #ffb74d,
+      0 0 15px #ff9800,
+      0 0 25px #ff5722,
+      0 0 35px rgba(255, 87, 34, 0.5),
+      inset 0 0 15px rgba(255, 183, 77, 0.15);
+  }
+  50% {
+    box-shadow:
+      0 0 6px #ff8a65,
+      0 0 12px #ff5722,
+      0 0 22px #e64a19,
+      0 0 32px rgba(230, 74, 25, 0.45),
+      inset 0 0 12px rgba(255, 138, 101, 0.12);
+  }
+  75% {
+    box-shadow:
+      0 0 10px #ffc107,
+      0 0 18px #ff9800,
+      0 0 28px #ff5722,
+      0 0 38px rgba(255, 87, 34, 0.55),
+      inset 0 0 18px rgba(255, 193, 7, 0.18);
+  }
+}
+
+@keyframes fire-border-dance {
+  0%, 100% {
+    border-color: #ff7b3a;
+  }
+  25% {
+    border-color: #ffb74d;
+  }
+  50% {
+    border-color: #ff5722;
+  }
+  75% {
+    border-color: #ffc107;
+  }
+}
+
+.blog-card-fire {
+  position: relative;
+  border: 3px solid #ff7b3a;
+  animation:
+    fire-glow 1.5s ease-in-out infinite,
+    fire-border-dance 2s ease-in-out infinite;
+}
+
+.blog-card-fire::after {
+  content: '🔥 fresh!';
+  position: absolute;
+  top: -12px;
+  right: 16px;
+  background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+  color: white;
+  font-family: var(--font-handwritten);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(255, 87, 34, 0.4);
+  animation: wiggle 2s ease-in-out infinite;
+  z-index: 10;
+}
+
 .blog-card-excerpt {
   color: var(--ink-light);
   font-size: 1rem;

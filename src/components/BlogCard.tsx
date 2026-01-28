@@ -14,6 +14,7 @@ interface BlogCardProps {
     publishedAt?: string
     categories?: string[]
     index?: number
+    isNewest?: boolean
 }
 
 const pastelColors = [
@@ -59,7 +60,8 @@ export function BlogCard({
     mainImage,
     publishedAt,
     categories,
-    index = 0
+    index = 0,
+    isNewest = false
 }: BlogCardProps) {
     const formatDate = (dateString?: string) => {
         if (!dateString) return ''
@@ -85,7 +87,7 @@ export function BlogCard({
             whileTap={{ scale: 0.98 }}
         >
             <Link href={`/blog/${slug}`} style={{ textDecoration: 'none' }}>
-                <div className="blog-card">
+                <div className={`blog-card ${isNewest ? 'blog-card-fire' : ''}`}>
                     {mainImage?.asset && (
                         <motion.div
                             whileHover={{ scale: 1.03 }}

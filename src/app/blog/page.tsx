@@ -49,6 +49,7 @@ export default async function BlogPage() {
                                 publishedAt={post.publishedAt}
                                 categories={post.categories}
                                 index={index}
+                                isNewest={index === 0}
                             />
                         ))}
                     </div>
