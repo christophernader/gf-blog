@@ -1,7 +1,8 @@
 import { groq } from 'next-sanity'
 
+// For home page: limited to 6 posts
 export const postsQuery = groq`
-  *[_type == "post"] | order(publishedAt desc) {
+  *[_type == "post"] | order(publishedAt desc) [0...6] {
     _id,
     title,
     slug,
@@ -11,6 +12,25 @@ export const postsQuery = groq`
     categories,
     "estimatedReadTime": round(length(pt::text(body)) / 5 / 200)
   }
+`
+
+// For blog page: paginated
+export const paginatedPostsQuery = groq`
+  *[_type == "post"] | order(publishedAt desc) [$start...$end] {
+    _id,
+    title,
+    slug,
+    excerpt,
+    mainImage,
+    publishedAt,
+    categories,
+    "estimatedReadTime": round(length(pt::text(body)) / 5 / 200)
+  }
+`
+
+// Count total posts for pagination
+export const postsCountQuery = groq`
+  count(*[_type == "post"])
 `
 
 export const postQuery = groq`
@@ -40,3 +60,4 @@ export const relatedPostsQuery = groq`
     categories
   }
 `
+

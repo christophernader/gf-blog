@@ -1,4 +1,4 @@
-import { client, sanityFetch } from '../../../../sanity/lib/client'
+import { sanityFetch } from '../../../../sanity/lib/client'
 import { postQuery, postSlugsQuery, relatedPostsQuery } from '../../../../sanity/lib/queries'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
@@ -30,7 +30,7 @@ interface RelatedPost {
 }
 
 export async function generateStaticParams() {
-    const slugs: string[] = await client.fetch(postSlugsQuery)
+    const slugs = await sanityFetch<string[]>(postSlugsQuery, {}, ['posts'])
     return slugs.map((slug) => ({ slug }))
 }
 
