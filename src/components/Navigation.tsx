@@ -3,6 +3,10 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, type Transition } from 'framer-motion'
+import { Interfaces } from 'doodle-icons'
+import { ThemeToggle } from './ThemeToggle'
+
+const { Home, Pencil, Heart } = Interfaces
 
 const springTransition: Transition = {
     type: "spring" as const,
@@ -21,9 +25,9 @@ export function Navigation() {
     const pathname = usePathname()
 
     const navLinks = [
-        { href: '/', label: 'home', icon: '🏠' },
-        { href: '/blog', label: 'posts', icon: '✏️' },
-        { href: '/about', label: 'about', icon: '💭' },
+        { href: '/', label: 'home', icon: Home },
+        { href: '/blog', label: 'posts', icon: Pencil },
+        { href: '/about', label: 'about', icon: Heart },
     ]
 
     return (
@@ -83,7 +87,9 @@ export function Navigation() {
                                             '--pill-border': colors.border,
                                         } as React.CSSProperties}
                                     >
-                                        <span className="nav-pill-icon">{link.icon}</span>
+                                        <span className="nav-pill-icon">
+                                            <link.icon height={18} width={18} />
+                                        </span>
                                         <span>{link.label}</span>
                                     </Link>
                                 </motion.div>
@@ -91,6 +97,15 @@ export function Navigation() {
                         )
                     })}
                 </ul>
+
+                {/* Theme toggle */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4, type: "spring", stiffness: 200, damping: 15 }}
+                >
+                    <ThemeToggle />
+                </motion.div>
             </div>
 
             {/* Decorative squiggle under nav */}

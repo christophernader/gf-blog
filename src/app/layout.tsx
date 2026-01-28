@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 import CatCompanion from '@/components/CatCompanion'
 import { ScrollToTop } from '@/components/ScrollToTop'
+import { BackToTop } from '@/components/BackToTop'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 export const metadata: Metadata = {
   title: 'my little blog ✿',
@@ -15,6 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Preconnect to external resources for faster loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cdn.sanity.io" />
+      </head>
       <body>
         {/* SVG Filter for boiling line / jitter effect */}
         <svg style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true">
@@ -44,9 +52,12 @@ export default function RootLayout({
             </filter>
           </defs>
         </svg>
-        <ScrollToTop />
-        {children}
-        <CatCompanion />
+        <ThemeProvider>
+          <ScrollToTop />
+          {children}
+          <CatCompanion />
+          <BackToTop />
+        </ThemeProvider>
       </body>
     </html>
   )

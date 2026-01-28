@@ -274,7 +274,8 @@ export default function CatCompanion() {
                     // Sprite faces Right by default.
                     // Walk Left -> Flip (180deg). Walk Right -> Normal (0deg).
                     transform: `rotateY(${direction === 'left' ? 180 : 0}deg)`,
-                    filter: 'drop-shadow(4px 4px 0 rgba(0,0,0,0.1))'
+                    filter: 'drop-shadow(4px 4px 0 rgba(0,0,0,0.1))',
+                    willChange: 'transform, background-position' // GPU acceleration hint
                 }}
                 title={`Mood: ${mood} | Energy: ${Math.floor(energy)}% | Loves you: ${Math.floor(affection)}%`}
             />

@@ -16,6 +16,7 @@ interface BlogCardProps {
     categories?: string[]
     index?: number
     isNewest?: boolean
+    estimatedReadTime?: number
 }
 
 const pastelColors = [
@@ -62,7 +63,8 @@ export function BlogCard({
     publishedAt,
     categories,
     index = 0,
-    isNewest = false
+    isNewest = false,
+    estimatedReadTime
 }: BlogCardProps) {
     const cardRef = useRef<HTMLElement>(null)
 
@@ -129,6 +131,8 @@ export function BlogCard({
                                 height={400}
                                 className="blog-card-image"
                                 style={{ transition: 'transform 0.3s ease' }}
+                                loading={index === 0 ? 'eager' : 'lazy'}
+                                priority={index === 0}
                             />
                         </motion.div>
                     )}
@@ -143,6 +147,16 @@ export function BlogCard({
                     {excerpt && <p className="blog-card-excerpt">{excerpt}</p>}
                     <div className="blog-card-meta">
                         {publishedAt && <span>{formatDate(publishedAt)}</span>}
+                        {estimatedReadTime && estimatedReadTime > 0 && (
+                            <span style={{
+                                marginLeft: publishedAt ? '0.75rem' : 0,
+                                opacity: 0.8,
+                                fontFamily: 'var(--font-handwritten)',
+                                fontSize: '0.95rem'
+                            }}>
+                                ~{estimatedReadTime} min read ✿
+                            </span>
+                        )}
                     </div>
                     {categories && categories.length > 0 && (
                         <div style={{ marginTop: '0.5rem' }}>

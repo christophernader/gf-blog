@@ -14,6 +14,7 @@ interface Post {
   mainImage?: object
   publishedAt?: string
   categories?: string[]
+  estimatedReadTime?: number
 }
 
 async function getPosts(): Promise<Post[]> {
@@ -59,6 +60,7 @@ export default async function HomePage() {
                   categories={post.categories}
                   index={index}
                   isNewest={index === 0}
+                  estimatedReadTime={post.estimatedReadTime}
                 />
               ))}
             </div>

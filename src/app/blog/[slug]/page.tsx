@@ -1,9 +1,11 @@
 import { client, sanityFetch } from '../../../../sanity/lib/client'
-import { postQuery, postSlugsQuery } from '../../../../sanity/lib/queries'
+import { postQuery, postSlugsQuery, relatedPostsQuery } from '../../../../sanity/lib/queries'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 import { DoodleDecorations } from '@/components/DoodleDecorations'
 import { PostContent } from '@/components/PostContent'
+import { RelatedPosts } from '@/components/RelatedPosts'
+import { ReadingProgressBar } from '@/components/ReadingProgressBar'
 import { notFound } from 'next/navigation'
 
 interface Post {
@@ -15,6 +17,15 @@ interface Post {
     publishedAt?: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     body?: any[]
+    categories?: string[]
+}
+
+interface RelatedPost {
+    _id: string
+    title: string
+    slug: { current: string }
+    mainImage?: object
+    publishedAt?: string
     categories?: string[]
 }
 
@@ -32,6 +43,20 @@ async function getPost(slug: string): Promise<Post | null> {
     }
 }
 
+async function getRelatedPosts(currentSlug: string, categories: string[]): Promise<RelatedPost[]> {
+    if (!categories || categories.length === 0) return []
+    try {
+        return await sanityFetch<RelatedPost[]>(
+            relatedPostsQuery,
+            { currentSlug, categories },
+            ['posts']
+        )
+    } catch (error) {
+        console.error('Failed to fetch related posts:', error)
+        return []
+    }
+}
+
 export default async function BlogPostPage({
     params,
 }: {
@@ -44,13 +69,17 @@ export default async function BlogPostPage({
         notFound()
     }
 
+    const relatedPosts = await getRelatedPosts(slug, post.categories || [])
+
     return (
         <>
+            <ReadingProgressBar />
             <DoodleDecorations />
             <Navigation />
 
             <main className="container container-narrow">
                 <PostContent post={post} />
+                <RelatedPosts posts={relatedPosts} />
             </main>
 
             <Footer />
