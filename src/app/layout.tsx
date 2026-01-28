@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import CatCompanion from '@/components/CatCompanion'
+import { ScrollToTop } from '@/components/ScrollToTop'
 
 export const metadata: Metadata = {
   title: 'my little blog ✿',
@@ -43,6 +44,7 @@ export default function RootLayout({
             </filter>
           </defs>
         </svg>
+        <ScrollToTop />
         {children}
         <CatCompanion />
       </body>
