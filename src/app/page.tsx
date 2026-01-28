@@ -55,6 +55,7 @@ export default async function HomePage() {
                   publishedAt={post.publishedAt}
                   categories={post.categories}
                   index={index}
+                  isNewest={index === 0}
                 />
               ))}
             </div>

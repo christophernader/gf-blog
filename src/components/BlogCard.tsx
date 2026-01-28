@@ -1,8 +1,9 @@
 'use client'
 
+import { useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, type Variants, type Transition } from 'framer-motion'
+import { motion, useScroll, useTransform, type Variants, type Transition } from 'framer-motion'
 import { urlFor } from '../../sanity/lib/client'
 
 interface BlogCardProps {
@@ -63,6 +64,17 @@ export function BlogCard({
     index = 0,
     isNewest = false
 }: BlogCardProps) {
+    const cardRef = useRef<HTMLElement>(null)
+
+    // Scroll-based parallax for flames
+    const { scrollYProgress } = useScroll({
+        target: cardRef,
+        offset: ["start end", "end start"]
+    })
+
+    // Flames lag behind with a slight delay effect
+    const flameY = useTransform(scrollYProgress, [0, 1], [8, -8])
+
     const formatDate = (dateString?: string) => {
         if (!dateString) return ''
         return new Date(dateString).toLocaleDateString('en-US', {
@@ -74,6 +86,7 @@ export function BlogCard({
 
     return (
         <motion.article
+            ref={cardRef}
             variants={cardVariants}
             initial="hidden"
             whileInView="visible"
@@ -85,9 +98,17 @@ export function BlogCard({
                 transition: hoverTransition
             }}
             whileTap={{ scale: 0.98 }}
+            style={{ position: 'relative' }}
         >
             <Link href={`/blog/${slug}`} style={{ textDecoration: 'none' }}>
                 <div className={`blog-card ${isNewest ? 'blog-card-fire' : ''}`}>
+                    {/* Parallax flames overlay for newest post */}
+                    {isNewest && (
+                        <motion.div
+                            className="fire-flames-parallax"
+                            style={{ y: flameY }}
+                        />
+                    )}
                     {mainImage?.asset && (
                         <motion.div
                             whileHover={{ scale: 1.03 }}

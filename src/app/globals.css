@@ -482,79 +482,86 @@ a:hover {
 }
 
 /* ===========================
-   Fire Border Effect (Newest Post)
+   Fire Border Effect (Newest Post) - Cartoony Style
    =========================== */
-@keyframes fire-glow {
+@keyframes flame-dance {
   0%, 100% {
-    box-shadow:
-      0 0 5px #ff9d5c,
-      0 0 10px #ff7b3a,
-      0 0 20px #ff5722,
-      0 0 30px rgba(255, 87, 34, 0.4),
-      inset 0 0 10px rgba(255, 157, 92, 0.1);
-  }
-  25% {
-    box-shadow:
-      0 0 8px #ffb74d,
-      0 0 15px #ff9800,
-      0 0 25px #ff5722,
-      0 0 35px rgba(255, 87, 34, 0.5),
-      inset 0 0 15px rgba(255, 183, 77, 0.15);
+    transform: scaleY(1) translateY(0);
   }
   50% {
-    box-shadow:
-      0 0 6px #ff8a65,
-      0 0 12px #ff5722,
-      0 0 22px #e64a19,
-      0 0 32px rgba(230, 74, 25, 0.45),
-      inset 0 0 12px rgba(255, 138, 101, 0.12);
-  }
-  75% {
-    box-shadow:
-      0 0 10px #ffc107,
-      0 0 18px #ff9800,
-      0 0 28px #ff5722,
-      0 0 38px rgba(255, 87, 34, 0.55),
-      inset 0 0 18px rgba(255, 193, 7, 0.18);
+    transform: scaleY(1.15) translateY(-2px);
   }
 }
 
-@keyframes fire-border-dance {
+@keyframes flame-dance-alt {
   0%, 100% {
-    border-color: #ff7b3a;
-  }
-  25% {
-    border-color: #ffb74d;
+    transform: scaleY(1.1) translateY(-1px);
   }
   50% {
-    border-color: #ff5722;
+    transform: scaleY(0.95) translateY(1px);
   }
-  75% {
-    border-color: #ffc107;
+}
+
+@keyframes border-color-cycle {
+  0%, 100% {
+    border-color: #FF6B35;
+  }
+  33% {
+    border-color: #FF9F1C;
+  }
+  66% {
+    border-color: #FFE66D;
   }
 }
 
 .blog-card-fire {
   position: relative;
-  border: 3px solid #ff7b3a;
-  animation:
-    fire-glow 1.5s ease-in-out infinite,
-    fire-border-dance 2s ease-in-out infinite;
+  border: 4px solid #FF6B35;
+  animation: border-color-cycle 1s ease-in-out infinite;
+  overflow: visible;
 }
 
+/* Cartoon flame container - parallax enabled via JS */
+.fire-flames-parallax {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 24px;
+  pointer-events: none;
+  background:
+    /* Flame 1 - orange */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 24'%3E%3Cpath d='M10 0 C6 8 2 12 2 16 C2 20 6 24 10 24 C14 24 18 20 18 16 C18 12 14 8 10 0' fill='%23FF6B35'/%3E%3Cpath d='M10 8 C8 12 6 14 6 17 C6 20 8 22 10 22 C12 22 14 20 14 17 C14 14 12 12 10 8' fill='%23FFE66D'/%3E%3C/svg%3E") 5% 100% no-repeat,
+    /* Flame 2 - yellow core */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 20'%3E%3Cpath d='M8 0 C5 6 2 9 2 13 C2 17 5 20 8 20 C11 20 14 17 14 13 C14 9 11 6 8 0' fill='%23FF9F1C'/%3E%3Cpath d='M8 6 C6.5 9 5 11 5 13.5 C5 16 6.5 18 8 18 C9.5 18 11 16 11 13.5 C11 11 9.5 9 8 6' fill='%23FFE66D'/%3E%3C/svg%3E") 20% 100% no-repeat,
+    /* Flame 3 */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 22'%3E%3Cpath d='M9 0 C5.5 7 2 10 2 14 C2 18 5.5 22 9 22 C12.5 22 16 18 16 14 C16 10 12.5 7 9 0' fill='%23FF6B35'/%3E%3Cpath d='M9 7 C7 10 5.5 12 5.5 15 C5.5 18 7 20 9 20 C11 20 12.5 18 12.5 15 C12.5 12 11 10 9 7' fill='%23FF9F1C'/%3E%3C/svg%3E") 38% 100% no-repeat,
+    /* Flame 4 */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 18'%3E%3Cpath d='M7 0 C4 5 1.5 8 1.5 11.5 C1.5 15 4 18 7 18 C10 18 12.5 15 12.5 11.5 C12.5 8 10 5 7 0' fill='%23FF9F1C'/%3E%3Cpath d='M7 5 C5.5 8 4 9.5 4 12 C4 14.5 5.5 16 7 16 C8.5 16 10 14.5 10 12 C10 9.5 8.5 8 7 5' fill='%23FFE66D'/%3E%3C/svg%3E") 55% 100% no-repeat,
+    /* Flame 5 */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 24'%3E%3Cpath d='M10 0 C6 8 2 12 2 16 C2 20 6 24 10 24 C14 24 18 20 18 16 C18 12 14 8 10 0' fill='%23FF6B35'/%3E%3Cpath d='M10 8 C8 12 6 14 6 17 C6 20 8 22 10 22 C12 22 14 20 14 17 C14 14 12 12 10 8' fill='%23FFE66D'/%3E%3C/svg%3E") 72% 100% no-repeat,
+    /* Flame 6 */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 20'%3E%3Cpath d='M8 0 C5 6 2 9 2 13 C2 17 5 20 8 20 C11 20 14 17 14 13 C14 9 11 6 8 0' fill='%23FF9F1C'/%3E%3Cpath d='M8 6 C6.5 9 5 11 5 13.5 C5 16 6.5 18 8 18 C9.5 18 11 16 11 13.5 C11 11 9.5 9 8 6' fill='%23FFE66D'/%3E%3C/svg%3E") 90% 100% no-repeat;
+  background-size: 20px 24px, 16px 20px, 18px 22px, 14px 18px, 20px 24px, 16px 20px;
+  animation: flame-dance 0.4s ease-in-out infinite;
+  z-index: 5;
+}
+
+/* Fresh badge - cartoony style */
 .blog-card-fire::after {
   content: '🔥 fresh!';
   position: absolute;
-  top: -12px;
+  top: -14px;
   right: 16px;
-  background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+  background: #FF6B35;
   color: white;
   font-family: var(--font-handwritten);
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 4px 12px;
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(255, 87, 34, 0.4);
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
   animation: wiggle 2s ease-in-out infinite;
   z-index: 10;
 }
