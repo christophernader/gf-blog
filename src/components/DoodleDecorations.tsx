@@ -1,128 +1,62 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Interfaces, Objects, Weather } from 'doodle-icons'
 
-const { Star, Heart } = Interfaces
-const { Balloon, Crown } = Objects
-const { Sunny } = Weather
+// Fun floating doodle decorations for visual interest
+const doodles = [
+    { emoji: '✿', top: '10%', left: '5%', delay: 0, size: '2rem' },
+    { emoji: '⭐', top: '20%', right: '8%', delay: 0.5, size: '1.5rem' },
+    { emoji: '♡', top: '60%', left: '3%', delay: 1, size: '1.8rem' },
+    { emoji: '✧', top: '75%', right: '5%', delay: 1.5, size: '1.3rem' },
+    { emoji: '☁️', top: '40%', right: '3%', delay: 0.8, size: '2rem' },
+]
 
 export function DoodleDecorations() {
     return (
-        <>
-            {/* Top right floating star */}
-            <motion.div
-                animate={{
-                    y: [0, -12, 0],
-                    rotate: [-2, 2, -2]
-                }}
-                transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: 'easeInOut'
-                }}
-                style={{
-                    position: 'fixed',
-                    top: '15%',
-                    right: '8%',
-                    zIndex: 0,
-                    filter: 'url(#jitter-filter)'
-                }}
-            >
-                <Star height={40} width={40} style={{ opacity: 0.25 }} />
-            </motion.div>
-
-            {/* Top left sun */}
-            <motion.div
-                animate={{
-                    y: [0, -15, 0],
-                    rotate: [0, 10, 0]
-                }}
-                transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                    delay: 0.5
-                }}
-                style={{
-                    position: 'fixed',
-                    top: '20%',
-                    left: '5%',
-                    zIndex: 0,
-                    filter: 'url(#jitter-filter)'
-                }}
-            >
-                <Sunny height={45} width={45} style={{ opacity: 0.2 }} />
-            </motion.div>
-
-            {/* Bottom right heart */}
-            <motion.div
-                animate={{
-                    y: [0, -10, 0],
-                    scale: [1, 1.05, 1]
-                }}
-                transition={{
-                    duration: 3.5,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                    delay: 1
-                }}
-                style={{
-                    position: 'fixed',
-                    bottom: '20%',
-                    right: '10%',
-                    zIndex: 0,
-                    filter: 'url(#jitter-filter)'
-                }}
-            >
-                <Heart height={38} width={38} style={{ opacity: 0.25 }} />
-            </motion.div>
-
-            {/* Bottom left balloon */}
-            <motion.div
-                animate={{
-                    y: [0, -18, 0],
-                    rotate: [-3, 3, -3]
-                }}
-                transition={{
-                    duration: 4.5,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                    delay: 0.8
-                }}
-                style={{
-                    position: 'fixed',
-                    bottom: '30%',
-                    left: '8%',
-                    zIndex: 0,
-                    filter: 'url(#jitter-filter)'
-                }}
-            >
-                <Balloon height={42} width={42} style={{ opacity: 0.2 }} />
-            </motion.div>
-
-            {/* Middle left crown */}
-            <motion.div
-                animate={{
-                    y: [0, -8, 0],
-                    rotate: [-2, 2, -2]
-                }}
-                transition={{
-                    duration: 5.5,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                    delay: 1.5
-                }}
-                style={{
-                    position: 'fixed',
-                    top: '45%',
-                    left: '3%',
-                    zIndex: 0,
-                    filter: 'url(#jitter-filter)'
-                }}
-            >
-                <Crown height={35} width={35} style={{ opacity: 0.18 }} />
-            </motion.div>
-        </>
+        <div
+            style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                pointerEvents: 'none',
+                zIndex: 1,
+                overflow: 'hidden'
+            }}
+            aria-hidden="true"
+        >
+            {doodles.map((doodle, i) => (
+                <motion.span
+                    key={i}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{
+                        opacity: 0.4,
+                        scale: 1,
+                        y: [0, -10, 0, 10, 0]
+                    }}
+                    transition={{
+                        opacity: { delay: doodle.delay, duration: 0.5 },
+                        scale: { delay: doodle.delay, duration: 0.5, type: 'spring' },
+                        y: {
+                            delay: doodle.delay + 0.5,
+                            duration: 4 + Math.random() * 2,
+                            repeat: Infinity,
+                            ease: 'easeInOut'
+                        }
+                    }}
+                    style={{
+                        position: 'absolute',
+                        top: doodle.top,
+                        left: doodle.left,
+                        right: doodle.right,
+                        fontSize: doodle.size,
+                        filter: 'url(#jitter-filter)'
+                    }}
+                >
+                    {doodle.emoji}
+                </motion.span>
+            ))}
+        </div>
     )
 }
