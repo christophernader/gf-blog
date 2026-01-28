@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion, type Variants, type Transition } from 'framer-motion'
 import { urlFor } from '../../sanity/lib/client'
 
 interface BlogCardProps {
@@ -25,6 +25,33 @@ const pastelColors = [
     'tag-cream',
 ]
 
+// Disney-style spring for hover
+const hoverTransition: Transition = {
+    type: "spring" as const,
+    stiffness: 300,
+    damping: 20
+}
+
+// Card entrance animation
+const cardVariants: Variants = {
+    hidden: {
+        opacity: 0,
+        y: 40,
+        scale: 0.95
+    },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: {
+            type: "spring" as const,
+            stiffness: 100,
+            damping: 15,
+            mass: 0.8
+        }
+    }
+}
+
 export function BlogCard({
     title,
     slug,
@@ -45,23 +72,44 @@ export function BlogCard({
 
     return (
         <motion.article
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            whileHover={{ scale: 1.02 }}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ delay: index * 0.1 }}
+            whileHover={{
+                y: -8,
+                rotate: 0.5,
+                transition: hoverTransition
+            }}
+            whileTap={{ scale: 0.98 }}
         >
             <Link href={`/blog/${slug}`} style={{ textDecoration: 'none' }}>
                 <div className="blog-card">
-                    {mainImage && (
-                        <Image
-                            src={urlFor(mainImage).width(600).height(400).url()}
-                            alt={title}
-                            width={600}
-                            height={400}
-                            className="blog-card-image"
-                        />
+                    {mainImage?.asset && (
+                        <motion.div
+                            whileHover={{ scale: 1.03 }}
+                            transition={hoverTransition}
+                            style={{ overflow: 'hidden', borderRadius: 'var(--radius-sketchy-alt)' }}
+                        >
+                            <Image
+                                src={urlFor(mainImage).width(600).height(400).url()}
+                                alt={title}
+                                width={600}
+                                height={400}
+                                className="blog-card-image"
+                                style={{ transition: 'transform 0.3s ease' }}
+                            />
+                        </motion.div>
                     )}
-                    <h3 className="blog-card-title">{title}</h3>
+                    <motion.h3
+                        className="blog-card-title"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                    >
+                        {title}
+                    </motion.h3>
                     {excerpt && <p className="blog-card-excerpt">{excerpt}</p>}
                     <div className="blog-card-meta">
                         {publishedAt && <span>{formatDate(publishedAt)}</span>}
@@ -69,12 +117,14 @@ export function BlogCard({
                     {categories && categories.length > 0 && (
                         <div style={{ marginTop: '0.5rem' }}>
                             {categories.map((cat, i) => (
-                                <span
+                                <motion.span
                                     key={cat}
                                     className={`tag ${pastelColors[i % pastelColors.length]}`}
+                                    whileHover={{ scale: 1.1 }}
+                                    transition={hoverTransition}
                                 >
                                     {cat}
-                                </span>
+                                </motion.span>
                             ))}
                         </div>
                     )}

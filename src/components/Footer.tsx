@@ -8,13 +8,35 @@ export function Footer() {
     return (
         <motion.footer
             className="footer"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{
+                type: "spring" as const,
+                stiffness: 100,
+                damping: 15,
+                delay: 0.2
+            }}
         >
-            <p className="footer-text">
-                made with ♡ • {year}
-            </p>
+            <motion.p
+                className="footer-text"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring" as const, stiffness: 300, damping: 20 }}
+            >
+                made with{' '}
+                <motion.span
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut" as const
+                    }}
+                    style={{ display: 'inline-block' }}
+                >
+                    ♡
+                </motion.span>
+                {' '}• {year}
+            </motion.p>
         </motion.footer>
     )
 }

@@ -68,6 +68,7 @@ export const postSchema = defineType({
                             { title: 'Italic', value: 'em' },
                             { title: 'Underline', value: 'underline' },
                             { title: 'Highlight', value: 'highlight' },
+                            { title: 'Code', value: 'code' },
                         ],
                     },
                 },
@@ -89,6 +90,49 @@ export const postSchema = defineType({
                         },
                     ],
                 },
+                {
+                    type: 'code',
+                    title: 'Code Block',
+                    options: {
+                        withFilename: true,
+                        languageAlternatives: [
+                            { title: 'JavaScript', value: 'javascript' },
+                            { title: 'TypeScript', value: 'typescript' },
+                            { title: 'HTML', value: 'html' },
+                            { title: 'CSS', value: 'css' },
+                            { title: 'Python', value: 'python' },
+                            { title: 'Bash', value: 'bash' },
+                            { title: 'JSON', value: 'json' },
+                        ],
+                    },
+                },
+                {
+                    name: 'pullQuote',
+                    title: 'Pull Quote / Highlight',
+                    type: 'object',
+                    fields: [
+                        {
+                            name: 'text',
+                            title: 'Quote Text',
+                            type: 'text',
+                            rows: 3
+                        },
+                        {
+                            name: 'style',
+                            title: 'Style',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Centered Fancy', value: 'fancy' },
+                                    { title: 'Minimal Left', value: 'minimal' },
+                                    { title: 'Solid Card', value: 'card' }
+                                ],
+                                layout: 'radio'
+                            },
+                            initialValue: 'fancy'
+                        }
+                    ]
+                }
             ],
         }),
         defineField({

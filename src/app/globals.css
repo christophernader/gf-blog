@@ -1,90 +1,112 @@
 /* ===========================
    Sketchy Pastel Blog - Design System
+   POLISHED VERSION
    =========================== */
 
 /* Google Fonts Import */
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap');
 
 /* ===========================
    CSS Custom Properties
    =========================== */
 :root {
-  /* Pastel Color Palette */
+  /* Pastel Color Palette - Refined for contrast */
   --pastel-pink: #FFE4E6;
-  --pastel-pink-dark: #FECDD3;
+  --pastel-pink-dark: #F9A8D4;
   --pastel-lavender: #E9D5FF;
-  --pastel-lavender-dark: #D8B4FE;
+  --pastel-lavender-dark: #C084FC;
   --pastel-mint: #D1FAE5;
-  --pastel-mint-dark: #A7F3D0;
+  --pastel-mint-dark: #6EE7B7;
   --pastel-peach: #FED7AA;
-  --pastel-peach-dark: #FDBA74;
+  --pastel-peach-dark: #FB923C;
   --pastel-sky: #BAE6FD;
-  --pastel-sky-dark: #7DD3FC;
-  --pastel-cream: #FEF9C3;
-  --pastel-cream-dark: #FDE047;
-  
-  /* Neutrals */
-  --ink: #374151;
-  --ink-light: #6B7280;
+  --pastel-sky-dark: #38BDF8;
+  --pastel-cream: #FEF3C7;
+  --pastel-cream-dark: #FBBF24;
+
+  /* Neutrals - Better contrast */
+  --ink: #1F2937;
+  --ink-light: #4B5563;
   --ink-lighter: #9CA3AF;
   --paper: #FFFBF5;
   --paper-dark: #FEF3E2;
   --white: #FFFFFF;
-  
+
   /* Typography */
   --font-handwritten: 'Caveat', cursive;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  
-  /* Spacing */
+  --font-body: 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing - Slightly more generous */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  --space-2xl: 3rem;
-  --space-3xl: 4rem;
-  
-  /* Border Radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  
+  --space-lg: 1.75rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  /* Border radius presets */
+  --radius-sketchy: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  --radius-sketchy-alt: 15px 255px 15px 255px / 225px 15px 225px 15px;
+
   /* Shadows */
-  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
-  --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.08);
-  --shadow-sketchy: 3px 3px 0px var(--ink-lighter);
-  
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-sketchy: 6px 6px 0 var(--ink);
+  --shadow-glow: 0 0 40px rgba(249, 168, 212, 0.3);
+
   /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-medium: 300ms ease;
-  --transition-slow: 500ms ease;
+  --transition-fast: 0.15s ease;
+  --transition-medium: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ===========================
    Base Styles
    =========================== */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 html {
-  font-size: 16px;
   scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.75;
   color: var(--ink);
-  background-color: var(--paper);
-  line-height: 1.7;
+  background:
+    /* Cross-hatch pink gradient at bottom - IN BACKGROUND */
+    repeating-linear-gradient(45deg,
+      transparent,
+      transparent 5px,
+      rgba(249, 168, 212, 0.06) 5px,
+      rgba(249, 168, 212, 0.06) 6px),
+    repeating-linear-gradient(-45deg,
+      transparent,
+      transparent 5px,
+      rgba(249, 168, 212, 0.06) 5px,
+      rgba(249, 168, 212, 0.06) 6px),
+    /* Soft gradient fade from bottom */
+    linear-gradient(to top,
+      rgba(249, 168, 212, 0.2) 0%,
+      rgba(249, 168, 212, 0.08) 20%,
+      transparent 40%),
+    var(--paper);
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Paper texture overlay */
+/* Paper texture overlay - subtle noise only */
 body::before {
   content: '';
   position: fixed;
@@ -93,45 +115,71 @@ body::before {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.025;
   z-index: 9999;
 }
 
+/* Page load animation */
+@keyframes pageLoad {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body>* {
+  animation: pageLoad 0.6s ease-out forwards;
+}
+
 /* ===========================
-   Typography
+   Typography - Refined sizes
    =========================== */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-handwritten);
-  font-weight: 600;
-  line-height: 1.3;
+  font-weight: 700;
+  line-height: 1.2;
   color: var(--ink);
+  letter-spacing: 0.02em;
 }
 
 h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(3rem, 6vw, 5rem);
+  margin-bottom: var(--space-md);
 }
 
 h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+  margin-bottom: var(--space-md);
 }
 
 h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
 }
 
 p {
   margin-bottom: var(--space-md);
+  color: var(--ink);
 }
 
 a {
   color: var(--ink);
   text-decoration: none;
-  transition: color var(--transition-fast);
+  transition: all var(--transition-fast);
 }
 
 a:hover {
-  color: var(--ink-light);
+  color: var(--pastel-pink-dark);
 }
 
 /* ===========================
@@ -141,52 +189,63 @@ a:hover {
 /* Hand-drawn border effect */
 .sketchy-border {
   position: relative;
-  border: 2px solid var(--ink);
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius-sketchy);
 }
 
-/* Alternative sketchy border */
-.sketchy-border-alt {
-  border: 2px solid var(--ink);
-  border-radius: 15px 255px 15px 255px / 225px 15px 225px 15px;
-}
-
-/* Wobbly box effect */
-.wobbly-box {
-  position: relative;
-}
-
-.wobbly-box::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  border: 2px solid var(--ink);
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  z-index: -1;
-}
-
-/* Highlight marker effect */
+/* ===========================
+   Highlight Markers - Refined
+   =========================== */
 .highlight-pink {
-  background: linear-gradient(180deg, transparent 60%, var(--pastel-pink) 60%);
-  padding: 0 var(--space-xs);
+  background: linear-gradient(120deg, var(--pastel-pink) 0%, var(--pastel-pink) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 45%;
+  background-position: 0 80%;
+  padding: 0 0.15em;
+  transition: background-size var(--transition-medium);
+}
+
+.highlight-pink:hover {
+  background-size: 100% 100%;
 }
 
 .highlight-lavender {
-  background: linear-gradient(180deg, transparent 60%, var(--pastel-lavender) 60%);
-  padding: 0 var(--space-xs);
+  background: linear-gradient(120deg, var(--pastel-lavender) 0%, var(--pastel-lavender) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 45%;
+  background-position: 0 80%;
+  padding: 0 0.15em;
+  transition: background-size var(--transition-medium);
+}
+
+.highlight-lavender:hover {
+  background-size: 100% 100%;
 }
 
 .highlight-mint {
-  background: linear-gradient(180deg, transparent 60%, var(--pastel-mint) 60%);
-  padding: 0 var(--space-xs);
+  background: linear-gradient(120deg, var(--pastel-mint) 0%, var(--pastel-mint) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 45%;
+  background-position: 0 80%;
+  padding: 0 0.15em;
+  transition: background-size var(--transition-medium);
+}
+
+.highlight-mint:hover {
+  background-size: 100% 100%;
 }
 
 .highlight-peach {
-  background: linear-gradient(180deg, transparent 60%, var(--pastel-peach) 60%);
-  padding: 0 var(--space-xs);
+  background: linear-gradient(120deg, var(--pastel-peach) 0%, var(--pastel-peach) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 45%;
+  background-position: 0 80%;
+  padding: 0 0.15em;
+  transition: background-size var(--transition-medium);
+}
+
+.highlight-peach:hover {
+  background-size: 100% 100%;
 }
 
 /* ===========================
@@ -196,39 +255,46 @@ a:hover {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--space-lg);
+  padding: 0 var(--space-xl);
 }
 
 .container-narrow {
-  max-width: 800px;
+  max-width: 780px;
 }
 
 /* ===========================
-   Animations
+   Animations - Refined
    =========================== */
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
+
   50% {
-    transform: translateY(-20px) rotate(3deg);
+    transform: translateY(-15px) rotate(2deg);
   }
 }
 
 @keyframes wiggle {
-  0%, 100% {
-    transform: rotate(-2deg);
+
+  0%,
+  100% {
+    transform: rotate(-1.5deg);
   }
+
   50% {
-    transform: rotate(2deg);
+    transform: rotate(1.5deg);
   }
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(40px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -236,95 +302,211 @@ a:hover {
 }
 
 @keyframes scribble {
-  0%, 100% {
+
+  0%,
+  100% {
     border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
   }
+
   25% {
     border-radius: 15px 255px 15px 255px / 225px 15px 225px 15px;
   }
+
   50% {
     border-radius: 225px 15px 255px 15px / 15px 255px 15px 225px;
   }
+
   75% {
     border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
   }
 }
 
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Disney-style bouncy entrance */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.05) translateY(-5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Subtle shimmer for highlights */
+@keyframes shimmer {
+
+  0%,
+  100% {
+    background-position: -100% 0;
+  }
+
+  50% {
+    background-position: 200% 0;
+  }
+}
+
 .animate-float {
-  animation: float 6s ease-in-out infinite;
+  animation: float 5s ease-in-out infinite;
 }
 
 .animate-wiggle {
-  animation: wiggle 3s ease-in-out infinite;
+  animation: wiggle 2.5s ease-in-out infinite;
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s ease forwards;
+  animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .animate-scribble {
-  animation: scribble 8s ease-in-out infinite;
+  animation: scribble 10s ease-in-out infinite;
+}
+
+.animate-pulse {
+  animation: pulse 3s ease-in-out infinite;
 }
 
 /* Staggered animation delays */
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.4s; }
-.delay-5 { animation-delay: 0.5s; }
+.delay-1 {
+  animation-delay: 0.1s;
+}
+
+.delay-2 {
+  animation-delay: 0.2s;
+}
+
+.delay-3 {
+  animation-delay: 0.3s;
+}
+
+.delay-4 {
+  animation-delay: 0.4s;
+}
+
+.delay-5 {
+  animation-delay: 0.5s;
+}
 
 /* ===========================
-   Blog Card Styles
+   Blog Card Styles - Refined
    =========================== */
 .blog-card {
   background: var(--white);
-  border: 2px solid var(--ink);
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius-sketchy);
   padding: var(--space-lg);
-  transition: all var(--transition-medium);
+  transition: all var(--transition-bounce);
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  filter: url(#jitter-filter);
+}
+
+.blog-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--pastel-pink) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-medium);
+  pointer-events: none;
 }
 
 .blog-card:hover {
-  transform: translateY(-8px) rotate(0.5deg);
+  transform: translateY(-10px) rotate(0.5deg);
   box-shadow: var(--shadow-sketchy);
+}
+
+.blog-card:hover::before {
+  opacity: 0.15;
 }
 
 .blog-card-image {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
-  border-radius: 15px 255px 15px 255px / 225px 15px 225px 15px;
+  border-radius: var(--radius-sketchy-alt);
   margin-bottom: var(--space-md);
+  transition: transform var(--transition-medium);
+}
+
+.blog-card:hover .blog-card-image {
+  transform: scale(1.02);
 }
 
 .blog-card-title {
   font-family: var(--font-handwritten);
-  font-size: 1.75rem;
+  font-size: 2rem;
   margin-bottom: var(--space-sm);
+  line-height: 1.2;
+  transition: color var(--transition-fast);
+}
+
+.blog-card:hover .blog-card-title {
+  color: var(--pastel-pink-dark);
 }
 
 .blog-card-excerpt {
   color: var(--ink-light);
-  font-size: 0.95rem;
+  font-size: 1rem;
+  font-weight: 500;
   margin-bottom: var(--space-md);
+  line-height: 1.6;
 }
 
 .blog-card-meta {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   color: var(--ink-lighter);
 }
 
 /* ===========================
-   Navigation Styles
+   Navigation Styles - Refined
    =========================== */
 .nav {
   position: sticky;
   top: 0;
-  background: var(--paper);
+  background: rgba(255, 251, 245, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: var(--space-md) 0;
   z-index: 100;
-  border-bottom: 2px dashed var(--ink-lighter);
+  border-bottom: 2.5px dashed var(--ink-lighter);
 }
 
 .nav-container {
@@ -335,8 +517,13 @@ a:hover {
 
 .nav-logo {
   font-family: var(--font-handwritten);
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: 700;
+  transition: transform var(--transition-bounce);
+}
+
+.nav-logo:hover {
+  transform: rotate(-3deg) scale(1.05);
 }
 
 .nav-links {
@@ -347,9 +534,11 @@ a:hover {
 
 .nav-link {
   font-family: var(--font-handwritten);
-  font-size: 1.25rem;
+  font-size: 1.4rem;
+  font-weight: 600;
   position: relative;
   padding-bottom: var(--space-xs);
+  transition: color var(--transition-fast);
 }
 
 .nav-link::after {
@@ -358,9 +547,14 @@ a:hover {
   bottom: 0;
   left: 0;
   width: 0;
-  height: 2px;
-  background: var(--pastel-pink-dark);
+  height: 3px;
+  background: linear-gradient(90deg, var(--pastel-pink-dark), var(--pastel-lavender-dark));
+  border-radius: 2px;
   transition: width var(--transition-medium);
+}
+
+.nav-link:hover {
+  color: var(--pastel-pink-dark);
 }
 
 .nav-link:hover::after {
@@ -368,7 +562,7 @@ a:hover {
 }
 
 /* ===========================
-   Button Styles
+   Button Styles - Refined
    =========================== */
 .btn {
   display: inline-flex;
@@ -376,18 +570,22 @@ a:hover {
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-lg);
   font-family: var(--font-handwritten);
-  font-size: 1.25rem;
-  font-weight: 500;
-  border: 2px solid var(--ink);
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  font-size: 1.35rem;
+  font-weight: 600;
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius-sketchy);
   background: var(--white);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all var(--transition-bounce);
 }
 
 .btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px) rotate(-1deg);
   box-shadow: var(--shadow-sketchy);
+}
+
+.btn:active {
+  transform: translateY(-2px);
 }
 
 .btn-pink {
@@ -403,146 +601,360 @@ a:hover {
 }
 
 /* ===========================
-   Category Tags
+   Category Tags - Refined
    =========================== */
 .tag {
   display: inline-block;
-  padding: var(--space-xs) var(--space-sm);
+  padding: 0.35rem 0.75rem;
   font-family: var(--font-handwritten);
-  font-size: 1rem;
-  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 20px;
   margin-right: var(--space-xs);
   margin-bottom: var(--space-xs);
+  transition: all var(--transition-fast);
+  border: 2px solid transparent;
 }
 
-.tag-pink { background: var(--pastel-pink); }
-.tag-lavender { background: var(--pastel-lavender); }
-.tag-mint { background: var(--pastel-mint); }
-.tag-peach { background: var(--pastel-peach); }
-.tag-sky { background: var(--pastel-sky); }
-.tag-cream { background: var(--pastel-cream); }
+.tag:hover {
+  transform: scale(1.08);
+}
+
+.tag-pink {
+  background: var(--pastel-pink);
+  border-color: var(--pastel-pink-dark);
+}
+
+.tag-lavender {
+  background: var(--pastel-lavender);
+  border-color: var(--pastel-lavender-dark);
+}
+
+.tag-mint {
+  background: var(--pastel-mint);
+  border-color: var(--pastel-mint-dark);
+}
+
+.tag-peach {
+  background: var(--pastel-peach);
+  border-color: var(--pastel-peach-dark);
+}
+
+.tag-sky {
+  background: var(--pastel-sky);
+  border-color: var(--pastel-sky-dark);
+}
+
+.tag-cream {
+  background: var(--pastel-cream);
+  border-color: var(--pastel-cream-dark);
+}
 
 /* ===========================
-   Blog Post Page
+   Blog Post Page - Refined
    =========================== */
 .post-header {
   text-align: center;
-  padding: var(--space-3xl) 0;
+  padding: var(--space-3xl) 0 var(--space-2xl);
 }
 
 .post-title {
   margin-bottom: var(--space-md);
+  font-size: clamp(2.5rem, 5vw, 4rem);
 }
 
 .post-meta {
   color: var(--ink-light);
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .post-featured-image {
   width: 100%;
   max-height: 500px;
   object-fit: cover;
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  border-radius: var(--radius-sketchy);
   margin-bottom: var(--space-2xl);
+  box-shadow: var(--shadow-soft);
 }
 
 .post-content {
   max-width: 700px;
   margin: 0 auto;
-  font-size: 1.1rem;
+  font-size: 1.125rem;
+  line-height: 1.85;
+}
+
+.post-content p {
+  margin-bottom: var(--space-lg);
 }
 
 .post-content h2 {
   margin-top: var(--space-2xl);
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
+  font-size: 2.25rem;
 }
 
 .post-content h3 {
   margin-top: var(--space-xl);
   margin-bottom: var(--space-md);
+  font-size: 1.75rem;
 }
 
 .post-content img {
   width: 100%;
-  border-radius: 15px 255px 15px 255px / 225px 15px 225px 15px;
+  border-radius: var(--radius-sketchy-alt);
   margin: var(--space-xl) 0;
+  box-shadow: var(--shadow-soft);
 }
 
 .post-content blockquote {
   border-left: 4px solid var(--pastel-lavender-dark);
-  padding-left: var(--space-lg);
-  margin: var(--space-xl) 0;
+  padding: var(--space-md) var(--space-lg);
+  margin: var(--space-lg) 0;
   font-style: italic;
-  color: var(--ink-light);
-  background: var(--pastel-lavender);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ink);
+  background: linear-gradient(135deg, rgba(233, 213, 255, 0.4) 0%, rgba(255, 228, 230, 0.4) 100%);
+  border-radius: 0 12px 12px 0;
+  position: relative;
+}
+
+.post-content blockquote::before {
+  content: '"';
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  font-size: 3rem;
+  font-family: var(--font-handwritten);
+  color: var(--pastel-lavender-dark);
+  opacity: 0.5;
+  line-height: 1;
+}
+
+/* Code blocks - sketchy style */
+.post-content pre,
+.post-content code {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.9rem;
+}
+
+.post-content code {
+  background: var(--pastel-cream);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  border: 1px solid var(--pastel-cream-dark);
+}
+
+.post-content pre {
+  background: var(--paper-dark);
+  border: 2px solid var(--ink);
+  border-radius: 8px 20px 8px 20px;
   padding: var(--space-lg);
-  border-radius: 0 15px 15px 0;
+  margin: var(--space-lg) 0;
+  overflow-x: auto;
+  position: relative;
+}
+
+.post-content pre code {
+  background: none;
+  padding: 0;
+  border: none;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.post-content ul,
+.post-content ol {
+  margin: var(--space-lg) 0;
+  padding-left: var(--space-xl);
+}
+
+.post-content li {
+  margin-bottom: var(--space-sm);
+}
+
+.post-content strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.post-content a {
+  color: var(--pastel-pink-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.post-content a:hover {
+  color: var(--pastel-lavender-dark);
 }
 
 /* ===========================
-   Grid Layout
+   Grid Layout - Refined
    =========================== */
 .posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: var(--space-xl);
   padding: var(--space-2xl) 0;
 }
 
 /* ===========================
-   Footer
+   Footer - Refined
    =========================== */
 .footer {
   text-align: center;
   padding: var(--space-2xl) 0;
   margin-top: var(--space-3xl);
-  border-top: 2px dashed var(--ink-lighter);
+  border-top: 2.5px dashed var(--ink-lighter);
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 228, 230, 0.2) 100%);
 }
 
 .footer-text {
   font-family: var(--font-handwritten);
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   color: var(--ink-light);
 }
 
 /* ===========================
-   Responsive
+   Responsive - Refined
    =========================== */
 @media (max-width: 768px) {
+  .container {
+    padding: 0 var(--space-lg);
+  }
+
+  .nav-links {
+    gap: var(--space-lg);
+  }
+
+  .nav-link {
+    font-size: 1.15rem;
+  }
+
+  .nav-logo {
+    font-size: 1.75rem;
+  }
+
+  .posts-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .blog-card-title {
+    font-size: 1.75rem;
+  }
+
+  .post-content {
+    font-size: 1.0625rem;
+  }
+}
+
+@media (max-width: 480px) {
   .nav-links {
     gap: var(--space-md);
   }
-  
+
   .nav-link {
     font-size: 1rem;
-  }
-  
-  .posts-grid {
-    grid-template-columns: 1fr;
   }
 }
 
 /* ===========================
-   Doodle Decorations
+   Doodle Decorations - Refined
    =========================== */
 .doodle {
   position: absolute;
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.5;
+  transition: opacity var(--transition-medium);
+}
+
+.doodle:hover {
+  opacity: 0.8;
 }
 
 .doodle-star {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
 }
 
 .doodle-heart {
-  width: 35px;
-  height: 35px;
+  width: 38px;
+  height: 38px;
 }
 
 .doodle-squiggle {
-  width: 60px;
-  height: 20px;
+  width: 65px;
+  height: 22px;
+}
+
+/* ===========================
+   Selection Styling
+   =========================== */
+::selection {
+  background: var(--pastel-pink);
+  color: var(--ink);
+}
+
+::-moz-selection {
+  background: var(--pastel-pink);
+  color: var(--ink);
+}
+
+/* ===========================
+   Scrollbar Styling
+   =========================== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--pastel-lavender-dark);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pastel-pink-dark);
+}
+
+/* ===========================
+   Jitter/Boiling Line Effect
+   (Ed, Edd n Eddy style)
+   =========================== */
+.jitter-headline {
+  filter: url(#jitter-filter);
+  will-change: filter;
+}
+
+/* For browsers that don't support SVG filters well, add CSS fallback */
+@supports not (filter: url(#jitter-filter)) {
+  .jitter-headline {
+    animation: jitter-fallback 0.1s infinite;
+  }
+
+  @keyframes jitter-fallback {
+
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+      transform: translate(0.5px, -0.5px) rotate(0.3deg);
+    }
+
+    50% {
+      transform: translate(-0.5px, 0.5px) rotate(-0.3deg);
+    }
+
+    75% {
+      transform: translate(0.5px, 0.5px) rotate(0.3deg);
+    }
+  }
 }
