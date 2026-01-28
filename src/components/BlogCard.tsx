@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, useScroll, useTransform, useSpring, type Variants, type Transition } from 'framer-motion'
+import { motion, useScroll, useTransform, useSpring, useMotionValueEvent, type Variants, type Transition } from 'framer-motion'
 import { urlFor } from '../../sanity/lib/client'
 
 interface BlogCardProps {
@@ -66,20 +66,20 @@ export function BlogCard({
 }: BlogCardProps) {
     const cardRef = useRef<HTMLElement>(null)
 
-    // Scroll-based parallax for flames
-    const { scrollYProgress } = useScroll({
-        target: cardRef,
-        offset: ["start end", "end start"]
+    // Track global scroll for parallax effect
+    const { scrollY } = useScroll()
+
+    // Create a spring-based scroll value that lags behind
+    const smoothScrollY = useSpring(scrollY, {
+        stiffness: 100,
+        damping: 30,
+        mass: 0.5
     })
 
-    // Transform scroll progress to Y offset
-    const flameYRaw = useTransform(scrollYProgress, [0, 1], [15, -15])
-
-    // Add spring physics so flames lag behind with smooth catch-up
-    const flameY = useSpring(flameYRaw, {
-        stiffness: 50,
-        damping: 15,
-        mass: 0.5
+    // Transform scroll to a small Y offset for flames (parallax factor)
+    const flameY = useTransform(smoothScrollY, (value) => {
+        // Small parallax multiplier - flames move slower than scroll
+        return (value * 0.03) % 20 - 10
     })
 
     const formatDate = (dateString?: string) => {

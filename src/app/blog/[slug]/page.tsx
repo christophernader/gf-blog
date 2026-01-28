@@ -1,4 +1,4 @@
-import { client } from '../../../../sanity/lib/client'
+import { client, sanityFetch } from '../../../../sanity/lib/client'
 import { postQuery, postSlugsQuery } from '../../../../sanity/lib/queries'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
@@ -18,15 +18,18 @@ interface Post {
     categories?: string[]
 }
 
-export const revalidate = 60
-
 export async function generateStaticParams() {
     const slugs: string[] = await client.fetch(postSlugsQuery)
     return slugs.map((slug) => ({ slug }))
 }
 
 async function getPost(slug: string): Promise<Post | null> {
-    return await client.fetch(postQuery, { slug })
+    try {
+        return await sanityFetch<Post | null>(postQuery, { slug }, ['posts', `post-${slug}`])
+    } catch (error) {
+        console.error('Failed to fetch post:', error)
+        return null
+    }
 }
 
 export default async function BlogPostPage({

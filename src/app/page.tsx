@@ -1,4 +1,4 @@
-import { client } from '../../sanity/lib/client'
+import { sanityFetch } from '../../sanity/lib/client'
 import { postsQuery } from '../../sanity/lib/queries'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
@@ -16,10 +16,13 @@ interface Post {
   categories?: string[]
 }
 
-export const revalidate = 60 // Revalidate every 60 seconds
-
 async function getPosts(): Promise<Post[]> {
-  return await client.fetch(postsQuery)
+  try {
+    return await sanityFetch<Post[]>(postsQuery, {}, ['posts'])
+  } catch (error) {
+    console.error('Failed to fetch posts:', error)
+    return []
+  }
 }
 
 export default async function HomePage() {
