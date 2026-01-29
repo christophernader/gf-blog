@@ -10,26 +10,27 @@
    CSS Custom Properties
    =========================== */
 :root {
-  /* Pastel Color Palette - Softer, dreamier tones */
-  --pastel-pink: #FDF2F4;
-  --pastel-pink-dark: #F0B4C4;
-  --pastel-lavender: #F3EAFC;
-  --pastel-lavender-dark: #C9A8E8;
-  --pastel-mint: #E8F8F0;
-  --pastel-mint-dark: #8DD4B0;
-  --pastel-peach: #FDF4E8;
-  --pastel-peach-dark: #E8B88A;
-  --pastel-sky: #E8F4FC;
-  --pastel-sky-dark: #7EC8E8;
-  --pastel-cream: #FFFCF0;
-  --pastel-cream-dark: #E8D48A;
+  /* Pastel Color Palette - Softer "Dusty Pastel" tones (less blinding) */
+  --pastel-pink: #F8E4E8;
+  --pastel-pink-dark: #E8A0B4;
+  --pastel-lavender: #EAE0F4;
+  --pastel-lavender-dark: #B890D8;
+  --pastel-mint: #DCF0E6;
+  --pastel-mint-dark: #78C4A0;
+  --pastel-peach: #F8ECD8;
+  --pastel-peach-dark: #D8A870;
+  --pastel-sky: #D8ECF8;
+  --pastel-sky-dark: #68B8D8;
+  --pastel-cream: #F8F4E4;
+  --pastel-cream-dark: #D8C470;
 
   /* Neutrals - Warmer, cozier feel */
   --ink: #3D3D3D;
   --ink-light: #6B6B6B;
   --ink-lighter: #A8A8A8;
-  --paper: #FFFEF9;
-  --paper-dark: #FFF8EC;
+  --paper: #FDF8F0;
+  --paper-alt: #F5EDE0;
+  --paper-dark: #F0E8D8;
   --white: #FFFFFF;
 
   /* Typography */
@@ -135,6 +136,38 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   opacity: 0.025;
   z-index: 9999;
+}
+
+/* Pink gradient cross-hatch at bottom */
+body::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40vh;
+  pointer-events: none;
+  background:
+    /* Cross-hatch lines */
+    repeating-linear-gradient(45deg,
+      transparent,
+      transparent 6px,
+      rgba(232, 160, 180, 0.15) 6px,
+      rgba(232, 160, 180, 0.15) 7px),
+    repeating-linear-gradient(-45deg,
+      transparent,
+      transparent 6px,
+      rgba(184, 144, 216, 0.12) 6px,
+      rgba(184, 144, 216, 0.12) 7px),
+    /* Pink/lavender base gradient */
+    linear-gradient(to top,
+      rgba(248, 228, 232, 0.6) 0%,
+      rgba(234, 224, 244, 0.4) 50%,
+      rgba(248, 236, 216, 0.2) 100%);
+  /* Fade mask: solid at bottom, transparent at top */
+  -webkit-mask-image: linear-gradient(to top, black 0%, black 30%, transparent 100%);
+  mask-image: linear-gradient(to top, black 0%, black 30%, transparent 100%);
+  z-index: -1;
 }
 
 /* Page load animation */
