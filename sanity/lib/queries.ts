@@ -61,3 +61,16 @@ export const relatedPostsQuery = groq`
   }
 `
 
+// Site settings singleton
+export const siteSettingsQuery = groq`
+  *[_type == "siteSettings"][0] {
+    heroTitle,
+    heroHighlight,
+    heroSubtitle,
+    aboutTitle,
+    aboutEmoji,
+    aboutContent,
+    blogPageTitle,
+    blogPageSubtitle
+  }
+`

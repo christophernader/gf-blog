@@ -2,6 +2,12 @@
 
 import { motion, type Variants, type Transition } from 'framer-motion'
 
+interface HomeHeroProps {
+    heroTitle?: string
+    heroHighlight?: string
+    heroSubtitle?: string
+}
+
 // Disney-style spring animation config
 const springTransition: Transition = {
     type: "spring" as const,
@@ -33,7 +39,18 @@ const itemVariants: Variants = {
     }
 }
 
-export function HomeHero() {
+// Default content (fallback if Sanity has no data)
+const defaults = {
+    heroTitle: 'welcome to my',
+    heroHighlight: 'little corner',
+    heroSubtitle: 'a cozy space for thoughts, stories, and all the little things that make life beautiful'
+}
+
+export function HomeHero({
+    heroTitle = defaults.heroTitle,
+    heroHighlight = defaults.heroHighlight,
+    heroSubtitle = defaults.heroSubtitle
+}: HomeHeroProps) {
     return (
         <motion.section
             variants={containerVariants}
@@ -119,7 +136,7 @@ export function HomeHero() {
                 className="jitter-headline"
                 style={{ position: 'relative' }}
             >
-                welcome to my <span className="highlight-pink">little corner</span>{' '}
+                {heroTitle} <span className="highlight-pink">{heroHighlight}</span>{' '}
                 <motion.span
                     animate={{
                         scale: [1, 1.15, 1],
@@ -149,7 +166,7 @@ export function HomeHero() {
                     lineHeight: 1.7
                 }}
             >
-                a cozy space for thoughts, stories, and all the little things that make life beautiful{' '}
+                {heroSubtitle}{' '}
                 <motion.span
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}

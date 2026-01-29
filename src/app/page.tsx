@@ -1,5 +1,5 @@
 import { sanityFetch } from '../../sanity/lib/client'
-import { postsQuery } from '../../sanity/lib/queries'
+import { postsQuery, siteSettingsQuery } from '../../sanity/lib/queries'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 import { DoodleDecorations } from '@/components/DoodleDecorations'
@@ -17,6 +17,12 @@ interface Post {
     estimatedReadTime?: number
 }
 
+interface SiteSettings {
+    heroTitle?: string
+    heroHighlight?: string
+    heroSubtitle?: string
+}
+
 async function getPosts(): Promise<Post[]> {
     try {
         return await sanityFetch<Post[]>(postsQuery, {}, ['posts'])
@@ -26,8 +32,17 @@ async function getPosts(): Promise<Post[]> {
     }
 }
 
+async function getSiteSettings(): Promise<SiteSettings | null> {
+    try {
+        return await sanityFetch<SiteSettings>(siteSettingsQuery, {}, ['siteSettings'])
+    } catch (error) {
+        console.error('Failed to fetch site settings:', error)
+        return null
+    }
+}
+
 export default async function HomePage() {
-    const posts = await getPosts()
+    const [posts, settings] = await Promise.all([getPosts(), getSiteSettings()])
 
     return (
         <>
@@ -35,7 +50,11 @@ export default async function HomePage() {
             <Navigation />
 
             <main className="container">
-                <HomeHero />
+                <HomeHero
+                    heroTitle={settings?.heroTitle}
+                    heroHighlight={settings?.heroHighlight}
+                    heroSubtitle={settings?.heroSubtitle}
+                />
 
                 {/* Recent Posts */}
                 <section>
