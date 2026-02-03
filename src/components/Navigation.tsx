@@ -21,7 +21,11 @@ const pillColors = [
     { bg: 'var(--pastel-mint)', border: 'var(--pastel-mint-dark)' },
 ]
 
-export function Navigation() {
+interface NavigationProps {
+    blogName?: string
+}
+
+export function Navigation({ blogName = 'my little blog' }: NavigationProps) {
     const pathname = usePathname()
 
     const navLinks = [
@@ -51,7 +55,7 @@ export function Navigation() {
                 >
                     <Link href="/" className="nav-logo-box">
                         <span className="nav-logo-flower">✿</span>
-                        <span className="nav-logo-text">my little blog</span>
+                        <span className="nav-logo-text">{blogName}</span>
                     </Link>
                 </motion.div>
 

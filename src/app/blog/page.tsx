@@ -1,5 +1,5 @@
 import { sanityFetch } from '../../../sanity/lib/client'
-import { paginatedPostsQuery, postsCountQuery } from '../../../sanity/lib/queries'
+import { paginatedPostsQuery, postsCountQuery, siteSettingsQuery } from '../../../sanity/lib/queries'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 import { DoodleDecorations } from '@/components/DoodleDecorations'
@@ -36,6 +36,22 @@ async function getPaginatedPosts(page: number): Promise<{ posts: Post[], totalCo
     }
 }
 
+// Add Settings Interface
+interface SiteSettings {
+    blogName?: string
+    blogPageTitle?: string
+    blogPageSubtitle?: string
+}
+
+async function getSiteSettings(): Promise<SiteSettings | null> {
+    try {
+        return await sanityFetch<SiteSettings>(siteSettingsQuery, {}, ['siteSettings'])
+    } catch (error) {
+        console.error('Failed to fetch site settings:', error)
+        return null
+    }
+}
+
 export default async function BlogPage({
     searchParams,
 }: {
@@ -43,16 +59,24 @@ export default async function BlogPage({
 }) {
     const { page: pageParam } = await searchParams
     const currentPage = Math.max(1, parseInt(pageParam || '1', 10))
-    const { posts, totalCount } = await getPaginatedPosts(currentPage)
+    // Fetch both posts and settings in parallel
+    const [{ posts, totalCount }, settings] = await Promise.all([
+        getPaginatedPosts(currentPage),
+        getSiteSettings()
+    ])
+
     const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE)
 
     return (
         <>
             <DoodleDecorations />
-            <Navigation />
+            <Navigation blogName={settings?.blogName} />
 
             <main className="container">
-                <BlogHeader />
+                <BlogHeader
+                    title={settings?.blogPageTitle}
+                    subtitle={settings?.blogPageSubtitle}
+                />
 
                 {posts.length === 0 ? (
                     <p style={{ textAlign: 'center', color: 'var(--ink-light)', padding: 'var(--space-2xl)' }}>

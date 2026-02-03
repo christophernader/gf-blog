@@ -64,6 +64,7 @@ export const relatedPostsQuery = groq`
 // Site settings singleton (fetch most recently updated to handle potential duplicates)
 export const siteSettingsQuery = groq`
   *[_type == "siteSettings"] | order(_updatedAt desc)[0] {
+    blogName,
     heroTitle,
     heroHighlight,
     heroSubtitle,

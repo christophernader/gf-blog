@@ -10,6 +10,7 @@ import { AboutContent } from '@/components/AboutContent'
 import type { PortableTextBlock } from '@portabletext/types'
 
 interface SiteSettings {
+    blogName?: string
     aboutTitle?: string
     aboutEmoji?: string
     aboutContent?: PortableTextBlock[]
@@ -37,7 +38,7 @@ export default async function AboutPage() {
     return (
         <>
             <DoodleDecorations />
-            <Navigation />
+            <Navigation blogName={settings?.blogName} />
 
             <main className="container container-narrow">
                 <AboutContent

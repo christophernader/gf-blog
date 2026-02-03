@@ -21,6 +21,7 @@ interface Post {
 }
 
 interface SiteSettings {
+    blogName?: string
     heroTitle?: string
     heroHighlight?: string
     heroSubtitle?: string
@@ -51,7 +52,7 @@ export default async function HomePage() {
     return (
         <>
             <DoodleDecorations />
-            <Navigation />
+            <Navigation blogName={settings?.blogName} />
 
             <main className="container">
                 <HomeHero
