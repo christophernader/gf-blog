@@ -1,4 +1,7 @@
 import { sanityFetch } from '../../../sanity/lib/client'
+
+export const dynamic = 'force-dynamic'
+
 import { siteSettingsQuery } from '../../../sanity/lib/queries'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
