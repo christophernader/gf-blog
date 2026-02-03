@@ -10,16 +10,16 @@ export default defineType({
     fields: [
         defineField({
             name: 'heroTitle',
-            title: 'Hero Title',
+            title: 'Hero Title (Before Highlight)',
             type: 'string',
-            description: 'Main title on the home page (e.g., "welcome to my little corner")',
+            description: 'Text BEFORE the highlighted part. Example: "welcome to my"',
             validation: Rule => Rule.required(),
         }),
         defineField({
             name: 'heroHighlight',
-            title: 'Hero Highlighted Word',
+            title: 'Hero Highlighted Word(s)',
             type: 'string',
-            description: 'The word/phrase to highlight in pink (e.g., "little corner")',
+            description: 'The word(s) to highlight in pink. Example: "little world" → renders as "welcome to my [little world]"',
         }),
         defineField({
             name: 'heroSubtitle',
