@@ -1,7 +1,7 @@
 import { Studio } from './Studio'
 
-// Ensure the Studio route is excluded from static generation
-export const dynamic = 'force-static'
+// Ensure the Studio route is handled dynamically
+export const dynamic = 'force-dynamic'
 
 export default function StudioPage() {
     return <Studio />
