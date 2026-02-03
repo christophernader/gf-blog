@@ -9,6 +9,12 @@ export default defineType({
     __experimental_actions: ['update', 'publish'],
     fields: [
         defineField({
+            name: 'blogName',
+            title: 'Blog Name (Logo)',
+            type: 'string',
+            description: 'The name shown in the top-left logo (e.g. "my little blog")',
+        }),
+        defineField({
             name: 'heroTitle',
             title: 'Hero Title (Before Highlight)',
             type: 'string',
