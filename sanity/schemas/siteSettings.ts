@@ -29,6 +29,49 @@ export default defineType({
             description: 'Subtitle text below the main title',
         }),
         defineField({
+            name: 'socialLinks',
+            title: 'Social Media Links',
+            type: 'array',
+            of: [
+                {
+                    type: 'object',
+                    fields: [
+                        {
+                            name: 'platform',
+                            title: 'Platform',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Instagram', value: 'instagram' },
+                                    { title: 'Twitter / X', value: 'twitter' },
+                                    { title: 'TikTok', value: 'tiktok' },
+                                    { title: 'YouTube', value: 'youtube' },
+                                    { title: 'Pinterest', value: 'pinterest' },
+                                    { title: 'LinkedIn', value: 'linkedin' },
+                                    { title: 'GitHub', value: 'github' },
+                                    { title: 'Bluesky', value: 'bluesky' },
+                                    { title: 'Other (Link)', value: 'link' },
+                                ]
+                            }
+                        },
+                        {
+                            name: 'url',
+                            title: 'URL',
+                            type: 'url',
+                            validation: Rule => Rule.required().uri({ scheme: ['http', 'https'] })
+                        }
+                    ],
+                    preview: {
+                        select: {
+                            title: 'platform',
+                            subtitle: 'url'
+                        }
+                    }
+                }
+            ],
+            description: 'Social media icons to display in the hero section',
+        }),
+        defineField({
             name: 'aboutTitle',
             title: 'About Page Title',
             type: 'string',

@@ -2,10 +2,13 @@
 
 import { motion, type Variants, type Transition } from 'framer-motion'
 
+import { SocialIcons } from './SocialIcons'
+
 interface HomeHeroProps {
     heroTitle?: string
     heroHighlight?: string
     heroSubtitle?: string
+    socialLinks?: any[]
 }
 
 // Disney-style spring animation config
@@ -49,7 +52,8 @@ const defaults = {
 export function HomeHero({
     heroTitle = defaults.heroTitle,
     heroHighlight = defaults.heroHighlight,
-    heroSubtitle = defaults.heroSubtitle
+    heroSubtitle = defaults.heroSubtitle,
+    socialLinks
 }: HomeHeroProps) {
     return (
         <motion.section
@@ -153,13 +157,18 @@ export function HomeHero({
                 </motion.span>
             </motion.h1>
 
+            {/* Social Links (below title) */}
+            <motion.div variants={itemVariants}>
+                <SocialIcons links={socialLinks} />
+            </motion.div>
+
             {/* Subtitle with fade-in */}
             <motion.p
                 variants={itemVariants}
                 style={{
                     fontSize: '1.25rem',
                     color: 'var(--ink-light)',
-                    marginTop: 'var(--space-lg)',
+                    marginTop: 'var(--space-md)',
                     maxWidth: '600px',
                     marginLeft: 'auto',
                     marginRight: 'auto',

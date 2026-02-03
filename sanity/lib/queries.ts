@@ -67,6 +67,7 @@ export const siteSettingsQuery = groq`
     heroTitle,
     heroHighlight,
     heroSubtitle,
+    socialLinks,
     aboutTitle,
     aboutEmoji,
     aboutContent,

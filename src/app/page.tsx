@@ -24,6 +24,7 @@ interface SiteSettings {
     heroTitle?: string
     heroHighlight?: string
     heroSubtitle?: string
+    socialLinks?: any[]
 }
 
 async function getPosts(): Promise<Post[]> {
@@ -57,6 +58,7 @@ export default async function HomePage() {
                     heroTitle={settings?.heroTitle}
                     heroHighlight={settings?.heroHighlight}
                     heroSubtitle={settings?.heroSubtitle}
+                    socialLinks={settings?.socialLinks}
                 />
 
                 {/* Recent Posts */}
