@@ -22,11 +22,12 @@ export function ReadingProgressBar() {
                 position: 'fixed',
                 top: 0,
                 left: 0,
-                height: 6, // Slightly thicker for visibility
-                background: 'linear-gradient(90deg, #F0B4C4 0%, #C9A8E8 50%, #8DD4B0 100%)',
-                width, // Animating width directly instead of scaleX
-                zIndex: 99999, // Ensure it's on top of everything
-                boxShadow: '0 2px 10px rgba(201, 168, 232, 0.4)'
+                height: 4,
+                background: 'linear-gradient(90deg, var(--pastel-pink-dark) 0%, var(--pastel-lavender-dark) 40%, var(--pastel-mint-dark) 80%, var(--pastel-sky-dark) 100%)',
+                width,
+                zIndex: 99999,
+                borderRadius: '0 4px 4px 0',
+                boxShadow: '0 1px 8px rgba(184, 144, 216, 0.3)',
             }}
         />
     )

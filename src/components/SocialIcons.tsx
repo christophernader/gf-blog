@@ -12,6 +12,18 @@ interface SocialIconsProps {
     links?: SocialLink[]
 }
 
+const platformColors: Record<string, string> = {
+    instagram: 'var(--pastel-pink)',
+    twitter: 'var(--pastel-sky)',
+    tiktok: 'var(--pastel-mint)',
+    youtube: 'var(--pastel-peach)',
+    pinterest: 'var(--pastel-pink)',
+    linkedin: 'var(--pastel-sky)',
+    github: 'var(--pastel-lavender)',
+    bluesky: 'var(--pastel-sky)',
+    link: 'var(--pastel-cream)',
+}
+
 const icons: Record<string, React.ReactNode> = {
     instagram: (
         <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
@@ -53,8 +65,9 @@ export function SocialIcons({ links }: SocialIconsProps) {
             marginBottom: 'var(--space-lg)',
             marginTop: '0'
         }}>
-            {links.map((link) => {
+            {links.map((link, index) => {
                 const icon = icons[link.platform] || icons.link
+                const bgColor = platformColors[link.platform] || platformColors.link
 
                 return (
                     <motion.a
@@ -62,23 +75,29 @@ export function SocialIcons({ links }: SocialIconsProps) {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ scale: 1.15, rotate: 5, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
+                        whileHover={{ scale: 1.15, rotate: 5, y: -3 }}
+                        whileTap={{ scale: 0.9 }}
+                        initial={{ opacity: 0, scale: 0, rotate: -10 }}
+                        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                        transition={{
+                            delay: index * 0.08,
+                            type: "spring",
+                            stiffness: 200,
+                            damping: 12,
+                        }}
                         className="social-icon"
                         style={{
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            width: '40px',
-                            height: '40px',
+                            width: '42px',
+                            height: '42px',
                             borderRadius: '50%',
-                            background: 'var(--paper)',
-                            border: '2px solid var(--ink-light)',
+                            background: bgColor,
+                            border: '2.5px solid var(--ink)',
                             color: 'var(--ink)',
-                            boxShadow: 'var(--shadow-sm)',
-                            cursor: 'pointer'
+                            boxShadow: '2px 2px 0 var(--ink)',
+                            cursor: 'pointer',
                         }}
                     >
                         {icon}
