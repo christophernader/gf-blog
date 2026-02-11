@@ -76,3 +76,35 @@ export const siteSettingsQuery = groq`
     blogPageSubtitle
   }
 `
+
+// WIP Projects
+export const wipProjectsQuery = groq`
+  *[_type == "wipProject"] | order(startedAt desc) {
+    _id,
+    title,
+    slug,
+    description,
+    status,
+    coverImage,
+    categories,
+    startedAt
+  }
+`
+
+export const wipProjectQuery = groq`
+  *[_type == "wipProject" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    description,
+    status,
+    coverImage,
+    body,
+    categories,
+    startedAt
+  }
+`
+
+export const wipProjectSlugsQuery = groq`
+  *[_type == "wipProject" && defined(slug.current)][].slug.current
+`

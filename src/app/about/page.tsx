@@ -14,6 +14,7 @@ interface SiteSettings {
     aboutTitle?: string
     aboutEmoji?: string
     aboutContent?: PortableTextBlock[]
+    socialLinks?: any[]
 }
 
 // Default content when Sanity has no data
@@ -48,7 +49,7 @@ export default async function AboutPage() {
                 />
             </main>
 
-            <Footer />
+            <Footer socialLinks={settings?.socialLinks} />
         </>
     )
 }

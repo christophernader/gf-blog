@@ -13,9 +13,14 @@ export const structure: StructureResolver = (S) =>
                         .documentId('siteSettings')
                 ),
 
-            // Regular document types
             S.divider(),
-            ...S.documentTypeListItems().filter(
-                (listItem) => listItem.getId() !== 'siteSettings'
-            ),
+
+            // Blog Posts
+            S.documentTypeListItem('post').title('Blog Posts'),
+
+            // WIP Projects
+            S.documentTypeListItem('wipProject').title('WIP Projects'),
+
+            // Authors
+            S.documentTypeListItem('author').title('Authors'),
         ])

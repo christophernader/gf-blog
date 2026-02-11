@@ -19,6 +19,7 @@ const pillColors = [
     { bg: 'var(--pastel-pink)', border: 'var(--pastel-pink-dark)' },
     { bg: 'var(--pastel-lavender)', border: 'var(--pastel-lavender-dark)' },
     { bg: 'var(--pastel-mint)', border: 'var(--pastel-mint-dark)' },
+    { bg: 'var(--pastel-yellow, #fff3cd)', border: 'var(--pastel-yellow-dark, #e0c97a)' },
 ]
 
 interface NavigationProps {
@@ -31,6 +32,7 @@ export function Navigation({ blogName = 'my little blog' }: NavigationProps) {
     const navLinks = [
         { href: '/', label: 'home', icon: Home },
         { href: '/blog', label: 'posts', icon: Pencil },
+        { href: '/wip', label: 'wip', icon: Pencil },
         { href: '/about', label: 'about', icon: Heart },
     ]
 

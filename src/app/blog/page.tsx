@@ -41,6 +41,7 @@ interface SiteSettings {
     blogName?: string
     blogPageTitle?: string
     blogPageSubtitle?: string
+    socialLinks?: any[]
 }
 
 async function getSiteSettings(): Promise<SiteSettings | null> {
@@ -143,7 +144,7 @@ export default async function BlogPage({
                 )}
             </main>
 
-            <Footer />
+            <Footer socialLinks={settings?.socialLinks} />
         </>
     )
 }

@@ -1,5 +1,5 @@
 import { sanityFetch } from '../../../../sanity/lib/client'
-import { postQuery, postSlugsQuery, relatedPostsQuery } from '../../../../sanity/lib/queries'
+import { postQuery, postSlugsQuery, relatedPostsQuery, siteSettingsQuery } from '../../../../sanity/lib/queries'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 import { DoodleDecorations } from '@/components/DoodleDecorations'
@@ -57,13 +57,27 @@ async function getRelatedPosts(currentSlug: string, categories: string[]): Promi
     }
 }
 
+interface SiteSettings {
+    blogName?: string
+    socialLinks?: any[]
+}
+
+async function getSiteSettings(): Promise<SiteSettings | null> {
+    try {
+        return await sanityFetch<SiteSettings>(siteSettingsQuery, {}, ['siteSettings'])
+    } catch (error) {
+        console.error('Failed to fetch site settings:', error)
+        return null
+    }
+}
+
 export default async function BlogPostPage({
     params,
 }: {
     params: Promise<{ slug: string }>
 }) {
     const { slug } = await params
-    const post = await getPost(slug)
+    const [post, settings] = await Promise.all([getPost(slug), getSiteSettings()])
 
     if (!post) {
         notFound()
@@ -75,14 +89,14 @@ export default async function BlogPostPage({
         <>
             <ReadingProgressBar />
             <DoodleDecorations />
-            <Navigation />
+            <Navigation blogName={settings?.blogName} />
 
             <main className="container container-narrow">
                 <PostContent post={post} />
                 <RelatedPosts posts={relatedPosts} />
             </main>
 
-            <Footer />
+            <Footer socialLinks={settings?.socialLinks} />
         </>
     )
 }

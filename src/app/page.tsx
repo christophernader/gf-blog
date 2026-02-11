@@ -93,7 +93,7 @@ export default async function HomePage() {
                 </section>
             </main>
 
-            <Footer />
+            <Footer socialLinks={settings?.socialLinks} />
         </>
     )
 }
