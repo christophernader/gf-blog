@@ -81,7 +81,7 @@ export default async function WipProjectPage({
         <>
             <ReadingProgressBar />
             <DoodleDecorations />
-            <Navigation blogName={settings?.blogName} />
+            <Navigation blogName={settings?.blogName} socialLinks={settings?.socialLinks} />
 
             <main className="container container-narrow">
                 {/* Status banner */}
@@ -110,7 +110,7 @@ export default async function WipProjectPage({
                 <PostContent post={postLike} />
             </main>
 
-            <Footer socialLinks={settings?.socialLinks} />
+            <Footer />
         </>
     )
 }

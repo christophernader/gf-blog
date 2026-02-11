@@ -31,10 +31,12 @@ const pillColors = [
 
 interface NavigationProps {
     blogName?: string
+    socialLinks?: any[]
 }
 
-export function Navigation({ blogName = 'my little blog' }: NavigationProps) {
+export function Navigation({ blogName = 'my little blog', socialLinks }: NavigationProps) {
     const pathname = usePathname()
+    const instagramLink = socialLinks?.find((l: any) => l.platform === 'instagram')
 
     const navLinks = [
         { href: '/', label: 'home', icon: Home },
@@ -111,14 +113,48 @@ export function Navigation({ blogName = 'my little blog' }: NavigationProps) {
                     })}
                 </ul>
 
-                {/* Theme toggle */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.4, type: "spring", stiffness: 200, damping: 15 }}
-                >
-                    <ThemeToggle />
-                </motion.div>
+                {/* Right side: Instagram + Theme toggle */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
+                    {instagramLink && (
+                        <motion.a
+                            href={instagramLink.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            whileHover={{ scale: 1.1, rotate: 5, y: -2 }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={{ delay: 0.45, type: "spring", stiffness: 200, damping: 15 }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: '38px',
+                                height: '38px',
+                                borderRadius: '50%',
+                                background: 'var(--pastel-pink)',
+                                border: '2.5px solid var(--ink)',
+                                color: 'var(--ink)',
+                                boxShadow: '2px 2px 0 var(--ink)',
+                                cursor: 'pointer',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                            </svg>
+                        </motion.a>
+                    )}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.4, type: "spring", stiffness: 200, damping: 15 }}
+                    >
+                        <ThemeToggle />
+                    </motion.div>
+                </div>
             </div>
 
             {/* Decorative squiggle under nav */}

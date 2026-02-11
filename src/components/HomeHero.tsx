@@ -2,8 +2,6 @@
 
 import { motion, type Variants, type Transition } from 'framer-motion'
 
-import { SocialIcons } from './SocialIcons'
-
 interface HomeHeroProps {
     heroTitle?: string
     heroHighlight?: string
@@ -157,10 +155,42 @@ export function HomeHero({
                 </motion.span>
             </motion.h1>
 
-            {/* Social Links (below title) */}
-            <motion.div variants={itemVariants}>
-                <SocialIcons links={socialLinks} />
-            </motion.div>
+            {/* Full Instagram link below title */}
+            {socialLinks && (() => {
+                const igLink = socialLinks.find((l: any) => l.platform === 'instagram')
+                if (!igLink) return null
+                return (
+                    <motion.div variants={itemVariants} style={{ marginTop: 'var(--space-sm)' }}>
+                        <motion.a
+                            href={igLink.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.03 }}
+                            style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '0.4rem',
+                                fontFamily: 'var(--font-body)',
+                                fontSize: '1rem',
+                                color: 'var(--ink-light)',
+                                textDecoration: 'none',
+                                padding: '0.3rem 0.8rem',
+                                background: 'var(--pastel-pink)',
+                                borderRadius: '20px',
+                                border: '1.5px solid var(--pastel-pink-dark)',
+                                transition: 'all 0.2s ease',
+                            }}
+                        >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                            </svg>
+                            {igLink.url}
+                        </motion.a>
+                    </motion.div>
+                )
+            })()}
 
             {/* Subtitle with fade-in */}
             <motion.p

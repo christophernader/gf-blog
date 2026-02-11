@@ -89,14 +89,14 @@ export default async function BlogPostPage({
         <>
             <ReadingProgressBar />
             <DoodleDecorations />
-            <Navigation blogName={settings?.blogName} />
+            <Navigation blogName={settings?.blogName} socialLinks={settings?.socialLinks} />
 
             <main className="container container-narrow">
                 <PostContent post={post} />
                 <RelatedPosts posts={relatedPosts} />
             </main>
 
-            <Footer socialLinks={settings?.socialLinks} />
+            <Footer />
         </>
     )
 }

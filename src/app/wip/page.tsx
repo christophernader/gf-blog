@@ -48,7 +48,7 @@ export default async function WipPage() {
     return (
         <>
             <DoodleDecorations />
-            <Navigation blogName={settings?.blogName} />
+            <Navigation blogName={settings?.blogName} socialLinks={settings?.socialLinks} />
 
             <main className="container">
                 <WipHeader />
@@ -76,7 +76,7 @@ export default async function WipPage() {
                 )}
             </main>
 
-            <Footer socialLinks={settings?.socialLinks} />
+            <Footer />
         </>
     )
 }

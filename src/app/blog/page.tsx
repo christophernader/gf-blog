@@ -71,7 +71,7 @@ export default async function BlogPage({
     return (
         <>
             <DoodleDecorations />
-            <Navigation blogName={settings?.blogName} />
+            <Navigation blogName={settings?.blogName} socialLinks={settings?.socialLinks} />
 
             <main className="container">
                 <BlogHeader
@@ -144,7 +144,7 @@ export default async function BlogPage({
                 )}
             </main>
 
-            <Footer socialLinks={settings?.socialLinks} />
+            <Footer />
         </>
     )
 }

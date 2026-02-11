@@ -52,7 +52,7 @@ export default async function HomePage() {
     return (
         <>
             <DoodleDecorations />
-            <Navigation blogName={settings?.blogName} />
+            <Navigation blogName={settings?.blogName} socialLinks={settings?.socialLinks} />
 
             <main className="container">
                 <HomeHero
@@ -93,7 +93,7 @@ export default async function HomePage() {
                 </section>
             </main>
 
-            <Footer socialLinks={settings?.socialLinks} />
+            <Footer />
         </>
     )
 }

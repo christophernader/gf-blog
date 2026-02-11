@@ -39,7 +39,7 @@ export default async function AboutPage() {
     return (
         <>
             <DoodleDecorations />
-            <Navigation blogName={settings?.blogName} />
+            <Navigation blogName={settings?.blogName} socialLinks={settings?.socialLinks} />
 
             <main className="container container-narrow">
                 <AboutContent
@@ -49,7 +49,7 @@ export default async function AboutPage() {
                 />
             </main>
 
-            <Footer socialLinks={settings?.socialLinks} />
+            <Footer />
         </>
     )
 }
