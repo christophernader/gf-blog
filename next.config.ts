@@ -20,10 +20,6 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // Enable React strict mode for best practices
   reactStrictMode: true,
-  // Optimize package imports to reduce bundle size
-  experimental: {
-    optimizePackageImports: ['framer-motion', 'doodle-icons', '@portabletext/react'],
-  },
 };
 
 export default nextConfig;
