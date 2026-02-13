@@ -15,6 +15,7 @@ interface WipProject {
     description?: string
     status?: string
     coverImage?: any
+    body?: any[]
     categories?: string[]
     startedAt?: string
 }
@@ -50,7 +51,7 @@ export default async function WipPage() {
             <DoodleDecorations />
             <Navigation blogName={settings?.blogName} socialLinks={settings?.socialLinks} />
 
-            <main className="container">
+            <main className="container container-narrow">
                 <WipHeader />
 
                 {projects.length === 0 ? (
@@ -58,21 +59,21 @@ export default async function WipPage() {
                         No works in progress yet! Head to <a href="/studio" style={{ textDecoration: 'underline' }}>/studio</a> to add your first project ✨
                     </p>
                 ) : (
-                    <div className="posts-grid">
+                    <section>
                         {projects.map((project, index) => (
                             <WipCard
                                 key={project._id}
                                 title={project.title}
-                                slug={project.slug.current}
                                 description={project.description}
                                 status={project.status}
                                 coverImage={project.coverImage}
+                                body={project.body}
                                 categories={project.categories}
                                 startedAt={project.startedAt}
                                 index={index}
                             />
                         ))}
-                    </div>
+                    </section>
                 )}
             </main>
 

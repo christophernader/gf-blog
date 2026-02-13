@@ -86,6 +86,7 @@ export const wipProjectsQuery = groq`
     description,
     status,
     coverImage,
+    body,
     categories,
     startedAt
   }
