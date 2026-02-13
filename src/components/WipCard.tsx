@@ -30,10 +30,18 @@ const portableTextComponents = {
     },
     block: {
         h2: ({ children }: { children?: React.ReactNode }) => (
-            <h3 style={{ marginTop: 'var(--space-lg)', fontSize: '1.2rem' }}>{children}</h3>
+            <h3 style={{ marginTop: 'var(--space-xl)', fontSize: '1.4rem' }}>{children}</h3>
         ),
         h3: ({ children }: { children?: React.ReactNode }) => (
-            <h4 style={{ marginTop: 'var(--space-md)', fontSize: '1.1rem' }}>{children}</h4>
+            <h4 style={{ marginTop: 'var(--space-lg)', fontSize: '1.2rem' }}>{children}</h4>
+        ),
+        normal: ({ children }: { children?: React.ReactNode }) => (
+            <p style={{ lineHeight: 1.7, marginBottom: 'var(--space-md)' }}>{children}</p>
+        ),
+    },
+    list: {
+        bullet: ({ children }: { children?: React.ReactNode }) => (
+            <ul style={{ paddingLeft: 'var(--space-lg)', marginBottom: 'var(--space-md)' }}>{children}</ul>
         ),
     },
 }
@@ -57,142 +65,136 @@ export function WipCard({
             viewport={{ once: true, margin: '-50px' }}
             transition={{
                 delay: index * 0.1,
-                type: "spring",
-                stiffness: 100,
-                damping: 15
+                duration: 0.6
             }}
             style={{
-                background: 'var(--paper)',
-                border: '3px solid var(--ink)',
-                borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px',
-                padding: 'var(--space-xl) var(--space-lg)',
-                marginBottom: 'var(--space-xl)',
-                boxShadow: '6px 6px 0px var(--ink-light)',
+                marginBottom: 'var(--space-3xl)',
                 position: 'relative',
-                overflow: 'hidden',
             }}
         >
-            {/* Top row: status badge + date */}
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                gap: 'var(--space-xs)',
-                marginBottom: 'var(--space-md)',
-            }}>
-                <motion.span
-                    whileHover={{ scale: 1.05, rotate: -2 }}
-                    style={{
-                        display: 'inline-block',
-                        padding: '0.3rem 0.85rem',
-                        borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px',
-                        background: statusInfo.bg,
-                        border: '2px solid var(--ink-light)',
-                        fontSize: '0.85rem',
-                        fontFamily: 'var(--font-handwritten)',
-                    }}
-                >
-                    {statusInfo.label}
-                </motion.span>
+            {/* Header Section: Title & Meta */}
+            <header style={{ marginBottom: 'var(--space-lg)', textAlign: 'center' }}>
+                <h2 style={{
+                    fontSize: '2.2rem',
+                    marginBottom: 'var(--space-sm)',
+                    lineHeight: 1.2,
+                }}>
+                    <span className="highlight-mint">{title}</span>
+                </h2>
 
-                {startedAt && (
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 'var(--space-md)',
+                    color: 'var(--ink-light)',
+                    fontFamily: 'var(--font-handwritten)',
+                    fontSize: '1rem',
+                }}>
                     <span style={{
-                        fontSize: '0.8rem',
-                        color: 'var(--ink-lighter)',
-                        fontFamily: 'var(--font-handwritten)',
+                        background: statusInfo.bg,
+                        padding: '0.1rem 0.6rem',
+                        borderRadius: '12px',
+                        fontSize: '0.9rem',
+                        color: 'var(--ink)',
+                        border: '1px solid var(--ink-lightest)'
                     }}>
-                        started {new Date(startedAt).toLocaleDateString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric'
-                        })}
+                        {statusInfo.label}
                     </span>
-                )}
-            </div>
+                    {startedAt && (
+                        <span>
+                            • started {new Date(startedAt).toLocaleDateString('en-US', {
+                                month: 'short',
+                                year: 'numeric'
+                            })} •
+                        </span>
+                    )}
+                </div>
+            </header>
 
             {/* Cover Image */}
             {coverImage && (
                 <div style={{
                     width: '100%',
-                    height: '220px',
                     borderRadius: '12px',
                     overflow: 'hidden',
-                    border: '2px solid var(--ink-light)',
-                    marginBottom: 'var(--space-md)',
+                    border: '2px solid var(--ink)',
+                    marginBottom: 'var(--space-xl)',
+                    boxShadow: '4px 4px 0px var(--pastel-lavender)'
                 }}>
                     <img
-                        src={urlFor(coverImage).width(700).height(300).url()}
+                        src={urlFor(coverImage).width(800).height(450).url()}
                         alt={coverImage.alt || title}
                         style={{
                             width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
+                            height: 'auto',
+                            display: 'block',
                         }}
                         loading="lazy"
                     />
                 </div>
             )}
 
-            {/* Title */}
-            <h2 style={{
-                fontSize: '1.5rem',
-                marginBottom: 'var(--space-sm)',
-                lineHeight: 1.3,
-            }}>
-                {title}
-            </h2>
-
-            {/* Description */}
+            {/* Description (Intro) */}
             {description && (
                 <p style={{
-                    color: 'var(--ink-light)',
-                    fontSize: '1rem',
+                    fontSize: '1.15rem',
                     lineHeight: 1.6,
-                    marginBottom: 'var(--space-md)',
+                    marginBottom: 'var(--space-lg)',
+                    fontStyle: 'italic',
+                    color: 'var(--ink-light)',
+                    borderLeft: '3px solid var(--pastel-pink)',
+                    paddingLeft: 'var(--space-md)',
                 }}>
                     {description}
                 </p>
             )}
 
-            {/* Body content (PortableText) */}
+            {/* Main Body Content */}
             {body && body.length > 0 && (
-                <div className="post-content" style={{
-                    marginTop: 'var(--space-md)',
-                    paddingTop: 'var(--space-md)',
-                    borderTop: '1px dashed var(--ink-lightest)',
-                }}>
+                <div className="post-content">
                     <PortableText value={body} components={portableTextComponents} />
                 </div>
             )}
 
-            {/* Tags */}
+            {/* Footer: Tags */}
             {categories && categories.length > 0 && (
                 <div style={{
                     display: 'flex',
                     flexWrap: 'wrap',
-                    gap: '0.4rem',
-                    marginTop: 'var(--space-md)',
-                    paddingTop: 'var(--space-sm)',
-                    borderTop: body && body.length > 0 ? 'none' : '1px dashed var(--ink-lightest)',
+                    gap: '0.5rem',
+                    marginTop: 'var(--space-xl)',
+                    justifyContent: 'center'
                 }}>
                     {categories.map((cat) => (
                         <span
                             key={cat}
                             style={{
-                                fontSize: '0.78rem',
-                                padding: '0.2rem 0.6rem',
-                                borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px',
+                                fontSize: '0.85rem',
+                                padding: '0.2rem 0.8rem',
+                                borderRadius: '20px',
                                 background: 'var(--paper-dark)',
                                 color: 'var(--ink-light)',
                                 fontFamily: 'var(--font-handwritten)',
                             }}
                         >
-                            {cat}
+                            #{cat}
                         </span>
                     ))}
                 </div>
             )}
+
+            {/* Separator (Wavy Line) */}
+            <div style={{
+                marginTop: 'var(--space-3xl)',
+                display: 'flex',
+                justifyContent: 'center',
+                opacity: 0.3
+            }}>
+                <svg width="100" height="15" viewBox="0 0 100 15" fill="none" stroke="currentColor">
+                    <path d="M0 7.5c2.5-2.5 5-2.5 7.5 0s5 2.5 7.5 0 5-2.5 7.5 0 5 2.5 7.5 0 5-2.5 7.5 0 5 2.5 7.5 0 5-2.5 7.5 0 5 2.5 7.5 0 5-2.5 7.5 0 5 2.5 7.5 0 5-2.5 7.5 0 5 2.5 7.5 0 5-2.5 7.5 0 5 2.5 7.5 0 5-2.5 7.5 0 5 2.5 7.5 0 5-2.5 7.5 0" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+            </div>
         </motion.article>
     )
 }
