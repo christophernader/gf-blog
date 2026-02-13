@@ -63,11 +63,11 @@ export function WipCard({
             }}
             style={{
                 background: 'var(--paper)',
-                border: '2px solid var(--ink-lightest)',
+                border: '3px solid var(--ink)',
                 borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px',
                 padding: 'var(--space-xl) var(--space-lg)',
                 marginBottom: 'var(--space-xl)',
-                boxShadow: '4px 4px 0px var(--ink-lightest)',
+                boxShadow: '6px 6px 0px var(--ink-light)',
                 position: 'relative',
                 overflow: 'hidden',
             }}
@@ -118,7 +118,7 @@ export function WipCard({
                     height: '220px',
                     borderRadius: '12px',
                     overflow: 'hidden',
-                    border: '2px solid var(--ink-lightest)',
+                    border: '2px solid var(--ink-light)',
                     marginBottom: 'var(--space-md)',
                 }}>
                     <img
