@@ -72,6 +72,9 @@ export const siteSettingsQuery = groq`
     aboutTitle,
     aboutEmoji,
     aboutContent,
+    aboutBio,
+    aboutCredentials,
+    aboutBackground,
     blogPageTitle,
     blogPageSubtitle
   }
@@ -84,6 +87,7 @@ export const wipProjectsQuery = groq`
     title,
     slug,
     description,
+    genre,
     status,
     coverImage,
     body,
@@ -98,6 +102,7 @@ export const wipProjectQuery = groq`
     title,
     slug,
     description,
+    genre,
     status,
     coverImage,
     body,

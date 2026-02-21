@@ -8,6 +8,9 @@ interface AboutContentProps {
     title: string
     emoji: string
     content?: PortableTextBlock[] | null
+    bio?: PortableTextBlock[] | null
+    credentials?: PortableTextBlock[] | null
+    background?: PortableTextBlock[] | null
 }
 
 // Custom components for Portable Text rendering
@@ -33,43 +36,55 @@ const portableTextComponents = {
     },
 }
 
-// Default fallback content
-const DefaultAboutContent = () => (
+const hasContent = (blocks?: PortableTextBlock[] | null) =>
+    blocks && blocks.length > 0
+
+// Placeholder components for when Sanity has no data
+const PlaceholderIntro = () => (
     <>
-        <p>
-            Welcome to my little corner of the internet! This is where I share my thoughts,
-            adventures, and all the small moments that make life beautiful.
+        <p style={{ color: 'var(--ink-light)', fontStyle: 'italic' }}>
+            [Go to <a href="/studio" style={{ textDecoration: 'underline' }}>/studio</a> &rarr; Site Settings &rarr; <strong>About Page Content (Intro)</strong> to write your opening paragraph.]
         </p>
-
-        <h2 style={{ marginTop: 'var(--space-2xl)' }}>
-            <span className="highlight-mint">a few things about me</span>
-        </h2>
-
-        <ul style={{ paddingLeft: 'var(--space-lg)', marginBottom: 'var(--space-lg)' }}>
-            <li>☕ I run on coffee and good vibes</li>
-            <li>📚 Always reading something new</li>
-            <li>🌿 Plant mom in training</li>
-            <li>✨ Believer in everyday magic</li>
-            <li>🎨 Creative soul at heart</li>
-        </ul>
-
-        <h2 style={{ marginTop: 'var(--space-2xl)' }}>
-            <span className="highlight-lavender">why this blog?</span>
-        </h2>
-
-        <p>
-            I started this space as a way to document my journey, share things I love,
-            and connect with kindred spirits. Whether you&apos;re here for the recipes,
-            the book recs, or just some cozy vibes – I&apos;m so glad you stopped by!
-        </p>
-
-        <p>
-            Feel free to say hi anytime. I&apos;d love to hear from you! 💌
+        <p style={{ color: 'var(--ink-lighter)', fontSize: '0.95rem' }}>
+            This is your welcome message. Introduce yourself and set the tone for your platform. What draws readers to your corner of the internet?
         </p>
     </>
 )
 
-export function AboutContent({ title, emoji, content }: AboutContentProps) {
+const PlaceholderBio = () => (
+    <>
+        <p style={{ color: 'var(--ink-light)', fontStyle: 'italic' }}>
+            [Go to <a href="/studio" style={{ textDecoration: 'underline' }}>/studio</a> &rarr; Site Settings &rarr; <strong>Author Biography</strong> to write your bio.]
+        </p>
+        <p style={{ color: 'var(--ink-lighter)', fontSize: '0.95rem' }}>
+            Write about who you are as a writer. Mention your genre (fiction, romance, fantasy, etc.) and the themes you explore in your work. This section reflects your stated author brand.
+        </p>
+    </>
+)
+
+const PlaceholderCredentials = () => (
+    <>
+        <p style={{ color: 'var(--ink-light)', fontStyle: 'italic' }}>
+            [Go to <a href="/studio" style={{ textDecoration: 'underline' }}>/studio</a> &rarr; Site Settings &rarr; <strong>Professional Credentials</strong> to add your credentials.]
+        </p>
+        <p style={{ color: 'var(--ink-lighter)', fontSize: '0.95rem' }}>
+            Share your writing experience and expertise. Include degrees, workshops, publications, or future goals such as &ldquo;currently pursuing a B.A. in English&rdquo; or &ldquo;plans to submit writing to literary journals.&rdquo;
+        </p>
+    </>
+)
+
+const PlaceholderBackground = () => (
+    <>
+        <p style={{ color: 'var(--ink-light)', fontStyle: 'italic' }}>
+            [Go to <a href="/studio" style={{ textDecoration: 'underline' }}>/studio</a> &rarr; Site Settings &rarr; <strong>Personal Background</strong> to share your story.]
+        </p>
+        <p style={{ color: 'var(--ink-lighter)', fontSize: '0.95rem' }}>
+            Reflect on personal experiences, interests, and expertise that are relevant to your writing, your genre, and your audience&apos;s interests.
+        </p>
+    </>
+)
+
+export function AboutContent({ title, emoji, content, bio, credentials, background }: AboutContentProps) {
     return (
         <motion.section
             initial={{ opacity: 0, y: 20 }}
@@ -118,10 +133,41 @@ export function AboutContent({ title, emoji, content }: AboutContentProps) {
                     marginTop: 'var(--space-2xl)'
                 }}
             >
-                {content && content.length > 0 ? (
-                    <PortableText value={content} components={portableTextComponents} />
+                {/* Intro Section */}
+                {hasContent(content) ? (
+                    <PortableText value={content!} components={portableTextComponents} />
                 ) : (
-                    <DefaultAboutContent />
+                    <PlaceholderIntro />
+                )}
+
+                {/* Author Biography - Rubric I.D: Stated Brand */}
+                <h2 style={{ marginTop: 'var(--space-2xl)' }}>
+                    <span className="highlight-mint">about the author</span>
+                </h2>
+                {hasContent(bio) ? (
+                    <PortableText value={bio!} components={portableTextComponents} />
+                ) : (
+                    <PlaceholderBio />
+                )}
+
+                {/* Professional Credentials - Rubric I.E */}
+                <h2 style={{ marginTop: 'var(--space-2xl)' }}>
+                    <span className="highlight-lavender">credentials &amp; experience</span>
+                </h2>
+                {hasContent(credentials) ? (
+                    <PortableText value={credentials!} components={portableTextComponents} />
+                ) : (
+                    <PlaceholderCredentials />
+                )}
+
+                {/* Personal Background - Rubric I.F */}
+                <h2 style={{ marginTop: 'var(--space-2xl)' }}>
+                    <span className="highlight-pink">personal background</span>
+                </h2>
+                {hasContent(background) ? (
+                    <PortableText value={background!} components={portableTextComponents} />
+                ) : (
+                    <PlaceholderBackground />
                 )}
             </motion.div>
         </motion.section>

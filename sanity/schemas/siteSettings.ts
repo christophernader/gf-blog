@@ -91,7 +91,7 @@ export default defineType({
         }),
         defineField({
             name: 'aboutContent',
-            title: 'About Page Content',
+            title: 'About Page Content (Intro)',
             type: 'array',
             of: [
                 {
@@ -112,7 +112,79 @@ export default defineType({
                     },
                 },
             ],
-            description: 'Full content for the about page',
+            description: 'Opening intro paragraph(s) for the about page. Set the tone and welcome readers.',
+        }),
+        defineField({
+            name: 'aboutBio',
+            title: 'Author Biography',
+            type: 'array',
+            of: [
+                {
+                    type: 'block',
+                    styles: [
+                        { title: 'Normal', value: 'normal' },
+                        { title: 'H3', value: 'h3' },
+                    ],
+                    marks: {
+                        decorators: [
+                            { title: 'Bold', value: 'strong' },
+                            { title: 'Italic', value: 'em' },
+                            { title: 'Pink Highlight', value: 'highlightPink' },
+                            { title: 'Mint Highlight', value: 'highlightMint' },
+                            { title: 'Lavender Highlight', value: 'highlightLavender' },
+                        ],
+                    },
+                },
+            ],
+            description: 'Your author biography — who you are as a writer. Reference your genre (fiction, romance, fantasy, etc.) and the themes you explore. This reflects your stated brand.',
+        }),
+        defineField({
+            name: 'aboutCredentials',
+            title: 'Professional Credentials',
+            type: 'array',
+            of: [
+                {
+                    type: 'block',
+                    styles: [
+                        { title: 'Normal', value: 'normal' },
+                        { title: 'H3', value: 'h3' },
+                    ],
+                    marks: {
+                        decorators: [
+                            { title: 'Bold', value: 'strong' },
+                            { title: 'Italic', value: 'em' },
+                            { title: 'Pink Highlight', value: 'highlightPink' },
+                            { title: 'Mint Highlight', value: 'highlightMint' },
+                            { title: 'Lavender Highlight', value: 'highlightLavender' },
+                        ],
+                    },
+                },
+            ],
+            description: 'Your writing credentials and experience. Include publications, degrees, workshops, or future goals (e.g., "currently pursuing a degree in English," "plans to submit to literary journals").',
+        }),
+        defineField({
+            name: 'aboutBackground',
+            title: 'Personal Background',
+            type: 'array',
+            of: [
+                {
+                    type: 'block',
+                    styles: [
+                        { title: 'Normal', value: 'normal' },
+                        { title: 'H3', value: 'h3' },
+                    ],
+                    marks: {
+                        decorators: [
+                            { title: 'Bold', value: 'strong' },
+                            { title: 'Italic', value: 'em' },
+                            { title: 'Pink Highlight', value: 'highlightPink' },
+                            { title: 'Mint Highlight', value: 'highlightMint' },
+                            { title: 'Lavender Highlight', value: 'highlightLavender' },
+                        ],
+                    },
+                },
+            ],
+            description: 'Personal background elements relevant to your writing — life experiences, interests, and expertise that inform your genre and connect with your audience.',
         }),
         defineField({
             name: 'blogPageTitle',

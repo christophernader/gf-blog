@@ -26,7 +26,13 @@ export const wipProjectSchema = defineType({
             title: 'Short Description',
             type: 'text',
             rows: 3,
-            description: 'A brief summary of this project',
+            description: 'A brief summary highlighting the narrative, drive, and structure of this work. Keep it concise and appealing to your target audience.',
+        }),
+        defineField({
+            name: 'genre',
+            title: 'Genre',
+            type: 'string',
+            description: 'The genre of this work (e.g., "Romance," "Fantasy," "Literary Fiction"). Helps align with your author brand.',
         }),
         defineField({
             name: 'status',

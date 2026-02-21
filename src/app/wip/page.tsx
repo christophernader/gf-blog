@@ -13,6 +13,7 @@ interface WipProject {
     title: string
     slug: { current: string }
     description?: string
+    genre?: string
     status?: string
     coverImage?: any
     body?: any[]
@@ -55,9 +56,28 @@ export default async function WipPage() {
                 <WipHeader />
 
                 {projects.length === 0 ? (
-                    <p style={{ textAlign: 'center', color: 'var(--ink-light)', padding: 'var(--space-2xl)' }}>
-                        No works in progress yet! Head to <a href="/studio" style={{ textDecoration: 'underline' }}>/studio</a> to add your first project ✨
-                    </p>
+                    <div style={{ textAlign: 'center', color: 'var(--ink-light)', padding: 'var(--space-2xl)' }}>
+                        <p>
+                            No works in progress yet! Head to <a href="/studio" style={{ textDecoration: 'underline' }}>/studio</a> to add your first project.
+                        </p>
+                        <div style={{
+                            textAlign: 'left',
+                            maxWidth: '500px',
+                            margin: 'var(--space-xl) auto 0',
+                            fontSize: '0.95rem',
+                            color: 'var(--ink-lighter)',
+                            lineHeight: 1.7
+                        }}>
+                            <p style={{ fontStyle: 'italic', marginBottom: 'var(--space-sm)' }}>For each WIP entry, fill in:</p>
+                            <ul style={{ paddingLeft: 'var(--space-lg)' }}>
+                                <li><strong>Title</strong> &mdash; Working title for your piece</li>
+                                <li><strong>Genre</strong> &mdash; e.g., Romance, Fantasy, Literary Fiction</li>
+                                <li><strong>Short Description</strong> &mdash; Brief summary of the narrative, drive, and structure</li>
+                                <li><strong>Tags</strong> &mdash; Themes that align with your author brand</li>
+                                <li><strong>Status</strong> &mdash; Where you are in the process</li>
+                            </ul>
+                        </div>
+                    </div>
                 ) : (
                     <section>
                         {projects.map((project, index) => (
@@ -65,6 +85,7 @@ export default async function WipPage() {
                                 key={project._id}
                                 title={project.title}
                                 description={project.description}
+                                genre={project.genre}
                                 status={project.status}
                                 coverImage={project.coverImage}
                                 body={project.body}

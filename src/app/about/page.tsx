@@ -14,6 +14,9 @@ interface SiteSettings {
     aboutTitle?: string
     aboutEmoji?: string
     aboutContent?: PortableTextBlock[]
+    aboutBio?: PortableTextBlock[]
+    aboutCredentials?: PortableTextBlock[]
+    aboutBackground?: PortableTextBlock[]
     socialLinks?: any[]
 }
 
@@ -46,6 +49,9 @@ export default async function AboutPage() {
                     title={settings?.aboutTitle || defaultContent.aboutTitle}
                     emoji={settings?.aboutEmoji || defaultContent.aboutEmoji}
                     content={settings?.aboutContent}
+                    bio={settings?.aboutBio}
+                    credentials={settings?.aboutCredentials}
+                    background={settings?.aboutBackground}
                 />
             </main>
 

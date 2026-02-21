@@ -7,6 +7,7 @@ import { urlFor } from '../../sanity/lib/client'
 interface WipCardProps {
     title: string
     description?: string
+    genre?: string
     status?: string
     coverImage?: any
     body?: any[]
@@ -49,6 +50,7 @@ const portableTextComponents = {
 export function WipCard({
     title,
     description,
+    genre,
     status = 'just-started',
     coverImage,
     body,
@@ -101,6 +103,18 @@ export function WipCard({
                     }}>
                         {statusInfo.label}
                     </span>
+                    {genre && (
+                        <span style={{
+                            background: 'var(--pastel-peach)',
+                            padding: '0.1rem 0.6rem',
+                            borderRadius: '12px',
+                            fontSize: '0.9rem',
+                            color: 'var(--ink)',
+                            border: '1px solid var(--ink-lightest)'
+                        }}>
+                            {genre}
+                        </span>
+                    )}
                     {startedAt && (
                         <span>
                             • started {new Date(startedAt).toLocaleDateString('en-US', {
